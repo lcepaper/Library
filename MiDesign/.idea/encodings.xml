@@ -14,6 +14,7 @@
     <file url="file://$PROJECT_DIR$/books/celery.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/books/forms.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/books/management/commands/run_scheduler.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/books/middleware.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/books/models.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/books/views.py" charset="UTF-8" />
     <file url="PROJECT" charset="GBK" />

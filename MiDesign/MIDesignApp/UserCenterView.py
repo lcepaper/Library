@@ -623,7 +623,7 @@ class MenuView(View):
                 })
         sysmenu = {
             "homeInfo": {"title": "材料信息管理", "href": "/admin"},
-            "logoInfo": {"title": "材料数据库平台", "image": "../static/images/logo2.png", "href": ""},
+            "logoInfo": {"title": "图书管理系统平台", "image": "../static/images/logo2.png", "href": ""},
             "menuInfo": menuInfo,
             "premenuInfo": foremenuInfo
         }
