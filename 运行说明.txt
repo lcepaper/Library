@@ -1,0 +1,7 @@
+python3.6
+
+celery运行命令  注意与python manage runserver同目录下运行： celery -A books worker -l info -P gevent --time-limit=3600
+
+定时器每天八点检测书籍归还通过邮件发送提醒，注意事项：在创建用户时填写正确的邮箱，如果用户没有填写邮箱会跳过邮件发送，运行命令：python manage.py run_scheduler
+可以直接使用admin  123456 来登陆，并且将admin邮件账号修改成自己的进行测试邮件，邮箱发送定时任务时间在books\management\commands\run_scheduler.py中  trigger=CronTrigger(hour=8, minute=0)
+定时测试时间字行修改

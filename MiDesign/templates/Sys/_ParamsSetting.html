@@ -1,0 +1,235 @@
+<div id="Tab{{ suid }}" >
+    <fieldset class="table-search-fieldset">
+        <legend>搜索信息</legend>
+        <div>
+            <form class="layui-form layui-form-pane1" action="" lay-filter="SearchForm{{ suid }}">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">标题</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="setname" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">标题分类</label>
+                        <div class="layui-input-inline">
+                            <select name="settype" lay-ignore class="layui-select"
+                                    style="text-align: center;width:200px">
+                                <option value="">请选择</option>
+                                {% for item in drop %}
+                                    <option value="{{ item }}">
+                                        {{ item }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                lay-filter="data-search-btn{{ suid }}"><i class="layui-icon"></i> 搜 索
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+    <script type="text/html" id="toolbarDemo_{{ suid }}">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加</button>
+            <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="addType">分类管理</button>
+            {#<button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除</button>#}
+        </div>
+    </script>
+    <table class="layui-hide" id="currentTableId_{{ suid }}" lay-filter="currentTableFilter_{{ suid }}"></table>
+    <script type="text/html" id="currentTableBar_{{ suid }}">
+        <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+    </script>
+    <script>
+        layui.use(['form', 'table'], function () {
+            var $ = layui.jquery,
+                form = layui.form,
+                table = layui.table,
+                miniAdmin = layui.miniAdmin;
+
+
+            table.render({
+                elem: '#currentTableId_{{ suid }}',
+                url: '/paramssetting',
+                request: {
+                    pageName: 'pageindex', //页码的参数名称，默认：page
+                    limitName: 'pagesize' //每页数据量的参数名，默认：limit
+                },
+                autoSort: false,
+                parseData: function (res) { //res 即为原始返回的数据
+                    //判断登录是否失效
+                    if (res.status==100) {
+                        miniAdmin.loginTools({
+                            loginCallback: function () {
+                                miniAdmin.flshPage()
+                            }
+                        }, "tabpage")
+                        return;
+                    }
+
+                    return {
+                        "code": res.status, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    };
+                },
+                toolbar: '#toolbarDemo_{{ suid }}',
+                defaultToolbar: ['filter', 'exports', 'print', {
+                    title: '提示',
+                    layEvent: 'LAYTABLE_TIPS',
+                    icon: 'layui-icon-tips'
+                }],
+                cols: [[
+                    {type: "checkbox", width: 50, fixed:'left'},
+                    {field: 'setid', width: 80, title: 'ID', sort: true},
+                    {field: 'setvalue', width: 120, title: '选项值', sort: true},
+                    {field: 'setname', width: 120, title: '选项名称', sort: true},
+                    {field: 'settype', width: 120, title: '类别', sort: true},
+                    {
+                        field: 'usestate', width: 120, title: '是否可用', sort: true,
+                        templet: function (d) {
+
+                            return d.usestate == 0 ? "否" : '是'
+                        }
+                    },
+                    {
+                        field: 'createdate', templet:function (d) {
+                            return layui.util.toDateString(d.createdate, 'yyyy-MM-dd HH:mm:ss');
+                        }, width: 200, title: '添加日期', sort: true
+                    },
+                    {field: 'creator', width: 200, title: '添加人', sort: true},
+                    {title: '操作', minWidth: 150, toolbar: '#currentTableBar_{{ suid }}', align: "center", fixed:'right'}
+                ]],
+                limits: [10, 15, 20, 25, 50, 100],
+                limit: 15,
+                page: true,
+                skin: 'line',
+                height: 'full-200'
+            });
+
+            table.resize('#currentTableId_{{ suid }}');
+
+            // 监听搜索操作
+            form.on('submit(data-search-btn{{ suid }})', function (data) {
+
+                var result = JSON.stringify(data.field);
+                //layer.alert(result, {  title: '最终的搜索信息'});
+                //执行搜索重载
+                table.reload('currentTableId_{{ suid }}', {
+                    page: {
+                        pageindex: 1
+                    }
+                    , where: {
+                        searchParams: result
+                    }
+                }, 'data');
+
+                return false;
+            });
+
+            /**
+             * toolbar监听事件
+             */
+            table.on('toolbar(currentTableFilter_{{ suid }})', function (obj) {
+                if (obj.event === 'add') {  // 监听添加操作
+                    doOperateAdd_{{ suid }}(0, $, miniAdmin);
+                } else if (obj.event === 'delete') {  // 监听删除操作
+                    var checkStatus = table.checkStatus('currentTableId_{{ suid }}')
+                        , data = checkStatus.data;
+                    //layer.alert(JSON.stringify(data));
+                } else if (obj.event == "addType") {
+                    miniAdmin.showConfirm({
+                        url: '/paramsSettingTypeEdit',
+                        data: {},
+                        title: "分类管理",
+                        style: {
+                            area: ['50%', '60%']
+                        }
+                    });
+
+                }
+            });
+
+            //监听表格复选框选择
+            table.on('checkbox(currentTableFilter_{{ suid }})', function (obj) {
+                console.log(obj)
+            });
+            //触发排序事件
+            table.on('sort(currentTableFilter_{{ suid }})', function (obj) {
+                //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                console.log(obj.field); //当前排序的字段名
+                console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+                console.log(this); //当前排序的 th 对象
+                //尽管我们的 table 自带排序功能，但并没有请求服务端。
+                //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                table.reload('currentTableId_{{ suid }}', {
+                    initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                    , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                        field: obj.field //排序字段
+                        , order: obj.type //排序方式
+                    }
+                });
+                //layer.msg('服务端排序。order by '+ obj.field + ' ' + obj.type);
+            });
+
+
+            table.on('tool(currentTableFilter_{{ suid }})', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {
+
+                    doOperateAdd_{{ suid }}(data.setid, $, miniAdmin);
+                    return false;
+                } else if (obj.event === 'delete') {
+                    layer.confirm('真的删除行么', function (index) {
+                        layer.close(index);
+                        $.ajax({
+                            url: "/paramssetting",
+                            type: "DELETE",
+                            data: {
+                                id: data.setid
+                            },
+                            success: function (result) {
+                                // 请求成功后的回调函数
+                                if (result.status != 200) {
+                                    layer.alert(result.msg)
+                                    return;
+                                }
+                                obj.del();
+                                miniAdmin.flshPage()
+                            }
+                        });
+
+                    });
+                }
+            });
+
+        });
+
+
+        function doOperateAdd_{{ suid }}(id, $, miniAdmin) {
+            var title = "添加选项";
+            if (id > 0) {
+                title = "编辑选项";
+            }
+            //调用自定义模态框编辑
+            miniAdmin.showConfirm({
+                url: '/paramssettingedit',
+                data: {
+                    id: id
+                },
+                title: title,
+                style: {
+                    area: ['50%', '50%']
+                }
+            });
+
+        }
+
+    </script>
+</div>

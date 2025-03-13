@@ -1,0 +1,92 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "/admin"
+  },
+  "logoInfo": {
+    "title": " 多学科智能设计平台",
+    "image": "../static/images/logo2.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "系统管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "首页面板",
+          "href": "/admin",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "项目管理",
+          "href": "/project",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "方案管理",
+          "href": "/plan",
+          "icon": "fa fa-window-maximize",
+          "target": "_self"
+        },
+        {
+          "title": "系统设置",
+          "href": "",
+          "icon": "fa fa-gears",
+          "target": "_self",
+          "child": [
+            {
+              "title": "用户管理",
+              "href": "/user",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "参数配置",
+              "href": "/paramssetting",
+              "icon": "fa fa-navicon",
+              "target": "_self"
+            },
+            {
+              "title": "系统设置",
+              "href": "/setting",
+              "icon": "fa fa-navicon",
+              "target": "_self"
+            },
+            {
+              "title": "菜单模块设置",
+              "href": "/menumodule",
+              "icon": "fa fa-navicon",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "流程建模",
+      "icon": "fa fa-lemon-o",
+      "target": "_blank",
+      "href": "/index"
+
+    },
+    {
+      "title": "优化研究",
+      "icon": "fa fa-lemon-o",
+      "target": "_blank",
+      "href": "/index"
+
+    },
+    {
+      "title": "状态监控",
+      "icon": "fa fa-lemon-o",
+      "target": "_blank",
+      "href": "/index"
+
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/css/kindeditor/plugins" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/css/kindeditor/themes" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/css/metroStyle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/css/metroStyle.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/js/kindeditor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/js/kindeditor/kindeditor-all.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/js/kindeditor/lang" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/js/kindeditor/php" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/js/lay-module/zTree" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/MIDesignApp/static/js/lay-module/zTree/ztree.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/books/celery.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/books/forms.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/books/management/commands/run_scheduler.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/books/models.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/books/views.py" charset="UTF-8" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>

@@ -1,0 +1,115 @@
+<form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+      lay-filter="EditForm{{ suid }}">
+    <input type="hidden" name="menuid" value="0">
+    <input type="hidden" name="menuparentid" value="0">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="menuname" lay-verify="required" autocomplete="off"
+                   placeholder="菜单名称" class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单url</label>
+        <div class="layui-input-block">
+            <input type="text" name="menuurl" lay-verify="required" autocomplete="off"
+                   placeholder="菜单url" class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-block">
+            <input type="text" name="orderfield" lay-verify="required" autocomplete="off"
+                   placeholder="排序" class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-block">
+            <input type="text" name="icon" lay-verify="required" autocomplete="off"
+                   placeholder="菜单图标" class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="menustatus" checked="checked" value="1" lay-skin="primary" title="是否可用">
+            <input type="checkbox" name="isadmin" value="1" lay-skin="primary" title="是否管理员">
+        </div>
+        <span class="error"></span>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    {% autoescape off %}
+        var jsonForm={{ form }}
+    {% endautoescape %}
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , miniAdmin = layui.miniAdmin;
+
+        var thisValue = form.val('EditForm{{ suid }}', jsonForm);
+
+        form.on('checkbox', function (data) {
+            var status = 0;
+            if (data.elem.name == 'menustatus') {
+                if (this.checked) {
+                    status = 1;
+                }
+                $("form[lay-filter='EditForm{{ suid }}'] input[name='menustatus']").val(status);
+            } else if (data.elem.name == 'isadmin') {
+                if (this.checked) {
+                    status = 1;
+                }
+                $("form[lay-filter='EditForm{{ suid }}'] input[name='isadmin']").val(status);
+            }
+            console.log(this.checked, data.elem.checked);
+        });
+
+        //监听提交
+        form.on('submit(EditForm{{suid}})', function (data) {
+            var data = form.val('EditForm{{ suid }}');
+
+            //单独处理checkbox的数据
+            $("form[lay-filter='EditForm{{ suid }}']  input[type=checkbox]").each(function () {
+                data[$(this).attr("name")] = $(this).val();
+            });
+
+            miniAdmin.postAjax({
+                url: "/menumoduleedit",
+                data: data,
+                posttype: "form",
+                callback: function (data) {
+                    if (data.status != 200) {
+                        if (data.listErr)
+                            miniAdmin.formerrsinfo('EditForm{{ suid }}', form, data.listErr);
+                        else if(data.msg)
+                        {
+                            layer.alert(data.msg)
+                        }
+                        return;
+                    }
+                    var pageindex = $(".layui-layer-page").attr("times");
+                    layer.close(pageindex)  //刷新页面
+                    miniAdmin.flshPage()
+                },
+                loginCallback: function () {
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

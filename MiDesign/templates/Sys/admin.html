@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="../static/favicon.ico">
+    <link rel="stylesheet" href="{% static 'css/layui.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layuimini.css' %}">
+    <link rel="stylesheet" href="{% static 'css/themes/default.css' %}">
+    <link rel="stylesheet" href="{% static 'css/public.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modules/layer/default/layer.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+    <script src="../static/layui.js" charset="utf-8"></script>
+    <script src="../static/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+    <script charset="utf-8" src="{% static 'js/kindeditor/kindeditor-all.js' %}"></script>
+    <script charset="utf-8" src="{% static 'js/kindeditor/lang/zh-CN.js' %}"></script>
+    <script charset="utf-8" src="{% static 'js/kindeditor/plugins/code/prettify.js' %}"></script>
+
+    <title>
+        材料数据库
+    </title>
+    <style>
+        .error {
+            padding: 6px 0;
+            color: red;
+        }
+
+        .ke-shadow .ke-menu {
+            z-index: 999999999 !important;
+        }
+
+        .ke-menu {
+            z-index: 999999999 !important;
+        }
+
+        .ke-container-default {
+            z-index: 99999999 !important;
+        }
+        .ke-dialog-mask{
+            z-index: 99999998 !important;
+        }
+
+    </style>
+    <style id="layuimini-bg-color">
+    </style>
+    <style>
+        .layui-card {
+            border: 1px solid #f2f2f2;
+            border-radius: 5px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            color: #1aa094;
+        }
+
+        .icon-cray {
+            color: #ffb800 !important;
+        }
+
+        .icon-blue {
+            color: #1e9fff !important;
+        }
+
+        .icon-tip {
+            color: #ff5722 !important;
+        }
+
+        .layuimini-qiuck-module {
+            text-align: center;
+            margin-top: 10px
+        }
+
+        .layuimini-qiuck-module a i {
+            display: inline-block;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 2px;
+            font-size: 30px;
+            background-color: #F8F8F8;
+            color: #333;
+            transition: all .3s;
+            -webkit-transition: all .3s;
+        }
+
+        .layuimini-qiuck-module a cite {
+            position: relative;
+            top: 2px;
+            display: block;
+            color: #666;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .welcome-module {
+            width: 100%;
+            height: 210px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+        }
+
+        .panel-body {
+            padding: 10px
+        }
+
+        .panel-title {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            color: inherit
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+            margin-top: .3em;
+        }
+
+        .layui-red {
+            color: red
+        }
+
+        .main_btn > p {
+            height: 40px;
+        }
+
+        .layui-bg-number {
+            background-color: #F8F8F8;
+        }
+
+        .layuimini-notice:hover {
+            background: #f6f6f6;
+        }
+
+        .layuimini-notice {
+            padding: 7px 16px;
+            clear: both;
+            font-size: 12px !important;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s ease-in-out;
+        }
+
+        .layuimini-notice-title, .layuimini-notice-label {
+            padding-right: 70px !important;
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            white-space: nowrap !important;
+        }
+
+        .layuimini-notice-title {
+            line-height: 28px;
+            font-size: 14px;
+        }
+
+        .layuimini-notice-extra {
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            right: 16px;
+            display: inline-block;
+            height: 16px;
+            color: #999;
+        }
+
+    </style>
+</head>
+<body class="layui-layout-body layuimini-all">
+<div class="layui-layout layui-layout-admin">
+
+    <!--头部菜单-->
+    {% include "_mainheader.html" %}
+    <!--无限极左侧菜单-->
+    <div class="layui-side layui-bg-black layuimini-menu-left">
+    </div>
+
+    <!--初始化加载层-->
+    <div class="layuimini-loader">
+        <div class="layuimini-loader-inner"></div>
+    </div>
+
+    <!--手机端遮罩层-->
+    {#    <div class="layuimini-make"></div>#}
+
+    <!-- 移动导航 -->
+    {#    <div class="layuimini-site-mobile"><i class="layui-icon"></i></div>#}
+
+    <div class="layui-body">
+
+        <div class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
+            <ul class="layui-tab-title">
+                <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
+            </ul>
+            <div class="layui-tab-control">
+                <li class="layuimini-tab-roll-left layui-icon layui-icon-left"></li>
+                <li class="layuimini-tab-roll-right layui-icon layui-icon-right"></li>
+                <li class="layui-tab-tool layui-icon layui-icon-down">
+                    <ul class="layui-nav close-box">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;"><span class="layui-nav-more"></span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;" layuimini-tab-close="current">关 闭 当 前</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="other">关 闭 其 他</a></dd>
+                                <dd><a href="javascript:;" layuimini-tab-close="all">关 闭 全 部</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+            <div class="layui-tab-content">
+                <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show">
+
+                    <div id="Tab{{ suid }}">
+                        <fieldset class="table-search-fieldset">
+                            <legend>搜索信息</legend>
+                            <div>
+                                <form class="layui-form layui-form-pane1" action="">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">材料名称</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="material_name" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">材料种类</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="material_type" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">创建日期</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="create_date" id="date_joined{{ suid }}"
+                                                       autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                                    lay-filter="data-search-btn{{ suid }}"><i class="layui-icon"></i> 搜
+                                                索
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </fieldset>
+                        <script type="text/html" id="toolbarDemo_{{ suid }}">
+                            <div class="layui-btn-container">
+                                {% if admin == 1 %}
+                                    <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add">
+                                    添加
+                                </button>
+                                {% endif %}
+
+                                {#<button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除</button>#}
+                            </div>
+                        </script>
+                        <table class="layui-hide" id="currentTableId_{{ suid }}"
+                               lay-filter="currentTableFilter_{{ suid }}"></table>
+                        <script type="text/html" id="currentTableBar_{{ suid }}">
+                            <a class="layui-btn layui-btn-xs" lay-event="view">查看</a>
+                            {% if admin == 1 %}
+                                <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete"
+                               lay-event="delete">删除</a>
+                            {% endif %}
+
+                        </script>
+
+                        <script>
+                            layui.use(['form', 'table', 'laydate', 'miniAdmin'], function () {
+
+                                var $ = layui.jquery,
+                                    form = layui.form,
+                                    table = layui.table,
+                                    laydate = layui.laydate,
+                                    miniAdmin = layui.miniAdmin;
+
+                                laydate.render({
+                                    elem: '#date_joined{{ suid }}'
+                                    , type: 'datetime'
+                                    , range: true //指定元素
+                                });
+
+                                table.render({
+                                    elem: '#currentTableId_{{ suid }}',
+                                    url: '/material',
+                                    request: {
+                                        pageName: 'pageindex', //页码的参数名称，默认：page
+                                        limitName: 'pagesize' //每页数据量的参数名，默认：limit
+                                    },
+                                    autoSort: false,
+                                    parseData: function (res) { //res 即为原始返回的数据
+                                        //判断登录是否失效
+                                        if (res.status == 100) {
+                                            miniAdmin.loginTools({
+                                                loginCallback: function () {
+                                                    miniAdmin.flshPage()
+                                                }
+                                            }, "tabpage")
+                                            return;
+                                        }
+
+                                        return {
+                                            "code": res.status, //解析接口状态
+                                            "msg": res.msg, //解析提示文本
+                                            "count": res.count, //解析数据长度
+                                            "data": res.data //解析数据列表
+                                        };
+                                    },
+                                    toolbar: '#toolbarDemo_{{ suid }}',
+                                    defaultToolbar: ['filter', 'exports', 'print', {
+                                        title: '提示',
+                                        layEvent: 'LAYTABLE_TIPS',
+                                        icon: 'layui-icon-tips'
+                                    }],
+                                    cols: [[
+                                        {field: 'id', title: 'ID', sort: true},
+                                        {field: 'material_name', title: '材料名称'},
+                                        {field: 'material_type', title: '材料种类'},
+                                        {field: 'trademark', title: '牌号', sort: true},
+                                        {field: 'prepare_batches', title: '制备批次'},
+                                        {
+                                            field: 'create_date', title: '创建时间', sort: true, templet: function (d) {
+                                                return layui.util.toDateString(d.create_date, 'yyyy-MM-dd HH:mm:ss');
+                                            }
+                                        },
+                                        {
+                                            title: '操作',
+                                            minWidth: 150,
+                                            toolbar: '#currentTableBar_{{ suid }}',
+                                            align: "center",
+                                            fixed: 'right'
+                                        }
+                                    ]],
+                                    limits: [10, 15, 20, 25, 50, 100],
+                                    limit: 10,
+                                    page: true,
+                                    skin: 'line',
+                                    height: 'full-200'
+                                });
+
+                                table.resize('#currentTableId_{{ suid }}');
+
+                                // 监听搜索操作
+                                form.on('submit(data-search-btn{{ suid }})', function (data) {
+
+                                    var result = JSON.stringify(data.field);
+                                    //layer.alert(result, {  title: '最终的搜索信息'});
+                                    //执行搜索重载
+                                    table.reload('currentTableId_{{ suid }}', {
+                                        page: {
+                                            pageindex: 1
+                                        }
+                                        , where: {
+                                            searchParams: result
+                                        }
+                                    }, 'data');
+
+                                    return false;
+                                });
+
+                                /**
+                                 * toolbar监听事件
+                                 */
+                                table.on('toolbar(currentTableFilter_{{ suid }})', function (obj) {
+                                    if (obj.event === 'add') {  // 监听添加操作
+                                        doOperateAdd_{{ suid }}(0, $, miniAdmin);
+                                    }
+                                });
+
+                                //触发排序事件
+                                table.on('sort(currentTableFilter_{{ suid }})', function (obj) {
+                                    //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                                    console.log(obj.field); //当前排序的字段名
+                                    console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+                                    console.log(this); //当前排序的 th 对象
+                                    //尽管我们的 table 自带排序功能，但并没有请求服务端。
+                                    //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+                                    table.reload('currentTableId_{{ suid }}', {
+                                        initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                                        , where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                                            field: obj.field //排序字段
+                                            , order: obj.type //排序方式
+                                        }
+                                    });
+                                    //layer.msg('服务端排序。order by '+ obj.field + ' ' + obj.type);
+                                });
+
+
+                                table.on('tool(currentTableFilter_{{ suid }})', function (obj) {
+                                    var data = obj.data;
+
+
+                                    if (obj.event === 'view') {
+
+                                        $.get('/viewmaterials?id=' + data.id, function (response, status, xhr) {
+                                            if (response.status === 400){
+                                                layer.msg(response.msg, {icon:2})
+                                            }else {
+                                                layer.open({
+                                              type: 1,
+                                               shade: 0.2,
+                                              title: '材料信息展示',
+                                              maxmin: true,
+                                              resize:false,
+                                              shadeClose: true,
+                                              area: ['50%', '95%'],
+                                              content: response //这里content是一个普通的String
+                                            });
+                                            }
+
+                                        })
+                                    } else if(obj.event === 'edit') {
+
+                                        doOperateAdd_{{ suid }}(data.id, $, miniAdmin);
+                                        return false;
+                                    } else if (obj.event === 'delete') {
+                                        layer.confirm('真的删除行么', function (index) {
+                                            layer.close(index);
+
+                                            miniAdmin.delAjax({
+                                                url: "/materialedit",
+                                                data: {id: data.id},
+                                                callback: function (result) {
+
+                                                    {#obj.del();#}
+                                                    {#miniAdmin.flshPage()#}
+                                                    var tableid = $(".layui-tab-item.layui-show table").attr("id");
+                                                    table.reload(tableid)
+                                                },
+                                                loginCallback: function () {
+
+                                                    layer.alert("登录成功，请重新删除")
+
+                                                }
+                                            })
+                                        });
+                                    }
+                                });
+
+                                function doOperateAdd_{{ suid }}(id, $, miniAdmin) {
+                                    var title = "添加材料信息";
+                                    if (id > 0) {
+                                        title = "编辑材料信息";
+                                    }
+
+                                    //调用自定义模态框编辑
+                                    miniAdmin.showConfirm({
+                                        url: '/materialedit',
+                                        data: {
+                                            id: id
+                                        },
+                                        title: title,
+                                        style: {
+                                            area: ['65%', '90%']
+                                        }
+                                    });
+
+                                }
+
+                            });
+
+
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function relogin() {
+
+    }
+
+    layui.use(['jquery', 'layer', 'miniAdmin', 'miniTab', 'echarts'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniAdmin = layui.miniAdmin
+        echarts = layui.echarts;
+        miniTab = layui.miniTab;
+
+        //menu
+        var options = {
+            iniUrl: "/menu",    // 初始化接口/static/api/init.json
+            clearUrl: "api/clear.json", // 缓存清理接口
+            urlHashLocation: true,      // 是否打开hash定位
+            bgColorDefault: false,      // 主题默认配置
+            multiModule: false,          // 是否开启多模块
+            menuChildOpen: false,       // 是否默认展开菜单
+            loadingTime: 0,             // 初始化加载时间
+            pageAnim: true,             // iframe窗口动画
+            isrenderForemenu: false,
+            maxTabNum: 20,              // 最大的tab打开数量
+        };
+        miniAdmin.render(options);
+
+
+        $('.login-out').on("click", function () {
+            layer.msg('退出登录成功', function () {
+                window.location = '/loginout';
+            });
+        });
+
+        $('.uppawd').on("click", function () {
+            miniAdmin.showConfirm({
+                url: '/uppwd',
+                data: {},
+                title: "修改密码",
+                style: {
+                    area: ['30%', '40%']
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<form id="ajaxformlogin" class="layui-form  " style="padding: 12px" method="post">
+    {% csrf_token %}
+    <div class="layui-col-sm12 layui-col-md12">
+        <div class="layui-form-item">
+            <input type="text" name="username" autocomplete="off"
+            placeholder="账号" class="layui-input" value="">
+        </div>
+    </div>
+    <div class="layui-col-sm12 layui-col-md12">
+        <div class="layui-form-item">
+            <input type="password" value="" name="password" lay-verify="required|password" autocomplete="off"
+                   placeholder="密码"   class="layui-input">
+        </div>
+    </div>
+</form>

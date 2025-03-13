@@ -1,0 +1,665 @@
+<style>
+    .layui-form-label{
+        width:130px
+    }
+</style>
+<div id="Tab{{ suid }}">
+<form class="layui-form layui-form-pane1" style="height:600px; overflow:scroll" method="post" action=""
+      lay-filter="EditForm{{ suid }}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数1</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter1" lay-verify="required" autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type1" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value1" autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input"  style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default1" lay-verify="required"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数2</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter2" autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type2">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value2"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default2"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数3</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter3"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type3">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value3"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default3"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数4</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter4"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type4">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value4"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default4"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数5</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter5"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type5">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value5"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default5"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数6</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter6"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type6">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value6"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default6"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数7</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter7"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type7">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value7"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default7"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数8</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter8"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type8">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value8"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default8"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数9</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter9"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type9">
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value9"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default9"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数10</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter10"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type10" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value10"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default10"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数11</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter11"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type11" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value11"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default11"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数12</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter12"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type12" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value12"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default12"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数13</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter13"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type13" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value13"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default13"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数14</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter14"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type14" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value14"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default14"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数15</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter15"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type15" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value15"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default15"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数16</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter16"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type16" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value16"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default16"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数17</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter17"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type17" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value17"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default17"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数18</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter18"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type18" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value18"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default18"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数19</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter19"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type19" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value19"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default19"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">参数20</label>
+        <div class="layui-input-inline">
+            <input type="text" name="parameter20"  autocomplete="off"
+                   placeholder="填写参数名" class="layui-input">
+        </div>
+
+        <div class="layui-input-inline">
+        <label class="layui-form-label">参数类型</label>
+        </div>
+        <div class="layui-input-inline">
+                <select  lay-ignore class="layui-select" style="width:100px" name="type20" >
+                <option value="choice">choice</option>
+                <option value="uniform">uniform</option>
+                <option value="randint">randint</option>
+            </select>
+            </div>
+
+        <label class="layui-form-label">参数取值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="value20"  autocomplete="off"
+                   placeholder="多值用空格隔开" class="layui-input" style="width:250px">
+        </div>
+
+        <label class="layui-form-label">默认值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="default20"  autocomplete="off"
+                   placeholder="默认值" class="layui-input" >
+        </div>
+    </div>
+
+
+
+    <div id="fixed" class="layui-form-item">
+            <div class="layui-input-block">
+                <button  class="layui-btn" lay-submit lay-filter="*">提交</button>
+            </div>
+        </div>
+
+</form>
+
+<script>
+    {% autoescape off %}
+        var jsonForm={{ form }}
+    {% endautoescape %}
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , miniAdmin = layui.miniAdmin;
+
+        var thisValue = form.val('EditForm{{ suid }}', jsonForm);
+        //监听提交
+        form.on('submit(EditForm{{suid}})', function (data) {
+            var data = form.val('EditForm{{ suid }}');
+            miniAdmin.postAjax({
+                url: "/search",
+                data: {
+                    company: JSON.stringify(data)
+                },
+                callback: function (data) {
+                    if (data.status == 200)
+                    {
+
+                        layer.alert("提交成功")
+                    }
+
+                },
+                loginCallback: function () {
+                }
+            })
+            return false;
+        });
+
+    });
+</script>
+</div>

@@ -1,0 +1,130 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户注册</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="{% static 'css/layui.css' %}">
+    <style>
+        .layui-layout-admin .layui-footer {
+            left: 0;
+        }
+
+        /* 覆盖原框架样式 */
+        .layui-elem-quote {
+            background-color: inherit !important;
+        }
+
+        .layui-input, .layui-select, .layui-textarea {
+            background-color: inherit;
+            padding-left: 30px;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-body layui-tab-content site-demo site-demo-body">
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-sm12 layui-col-md12 zyl_mar_01">
+                    <blockquote class="layui-elem-quote">欢迎注册- 多学科智能设计管理平台</blockquote>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <form class="layui-form layui-form-pane1" method="post" action="" lay-filter="registerForm">
+                {% csrf_token %}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账户</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" lay-verify="required|username" autocomplete="off"
+                               placeholder="账号" class="layui-input" value="{{ form.username.value }}">
+                        <span>{{ form.username.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密 码</label>
+                    <div class="layui-input-block">
+                        <input type="password" value="{{ form.password.value }}" name="password"
+                               lay-verify="required|password" autocomplete="off" placeholder="密码"
+                               class="layui-input">
+                        <span>{{ form.password.errors.0 }}</span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">重复密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="repassword" lay-verify="required|confirmPass" autocomplete="off"
+                               placeholder="重复密码"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <ul class="layui-input-block  error">
+                        {% for item in clean_errors %}
+                            <li>
+                                {{ item }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="layui-col-sm6">
+        </div>
+    </div>
+    {% include "_footer.html" %}
+</div>
+
+
+<!-- Jquery Js -->
+<script type="text/javascript" src="../static/jquery.min.js"></script>
+<!-- Layui Js -->
+<script type="text/javascript" src="../static/layui.js"></script>
+<script>
+    layui.use(['carousel', 'form'], function () {
+        var carousel = layui.carousel
+            , form = layui.form;
+        //自定义验证规则
+        form.verify({
+            userName: function (value) {
+                if (value.length < 5) {
+                    return '账号至少得5个字符';
+                }
+            }
+            , pass: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格']
+            , content: function (value) {
+                layedit.sync(editIndex);
+            },
+            confirmPass: function (value) {
+                if ($('input[name=password]').val() !== value)
+                    return '两次密码输入不一致！';
+            }
+        });
+
+        //监听提交
+        form.on('submit(registerForm)', function (data) {
+            return true;
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

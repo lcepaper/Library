@@ -1,0 +1,119 @@
+<form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+      lay-filter="EditForm{{ suid }}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="typename" lay-verify="required" autocomplete="off"
+                   placeholder="类型名称" class="layui-input">
+            <span>{{ form.typename.errors.0 }}</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block listtype">
+            <table class="layui-table">
+                <thead>
+                <th>名称</th>
+                <th>操作</th>
+                </thead>
+                <tbody>
+                {% for item in form %}
+                    <tr>
+                        <td>  {{ item }}</td>
+                        <td>
+                            <button class="layui-btn layui-btn-danger layui-btn-sm" data-name="{{ item }}"
+                                    lay-filter="delType" type="button">删除
+                            </button>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+        </div>
+    </div>
+</form>
+<script>
+    {% autoescape off %}
+        var jsonForm={{ form }}
+    {% endautoescape %}
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , miniAdmin = layui.miniAdmin;
+
+        var thisValue = form.val('EditForm{{ suid }}', {});
+
+        $('form[lay-filter="EditForm{{ suid }}"] button[lay-filter="delType"]').on('click', function (data) {
+            var delname = $(this).attr("data-name");
+            var tr=$(this).parents("tr");
+            layer.confirm('真的删除行么', function (index) {
+                layer.close(index);
+                var index = $.inArray(delname, jsonForm);
+                var delinfo=jsonForm.concat()
+                delinfo.splice(index,1)
+                doPostSettingType('del',delname,delinfo,tr)
+            });
+        });
+
+        /***
+         * 对下拉分类进行保存
+         * @param type
+         * @param typename
+         */
+        function doPostSettingType(type,typename,droptypedata,tr) {
+            miniAdmin.postAjax({
+                url: "/paramsSettingTypeEdit",
+                data: {
+                    typestr: JSON.stringify(droptypedata),
+                    type:type,
+                    typename:typename
+                },
+
+                callback: function (data) {
+
+                    if(data.status==200)
+                    {
+                        if(type=='del')
+                        {
+                            jsonForm=droptypedata;
+                            tr.remove()
+                        }
+                        else
+                        {   var pageindex = $(".layui-layer-page").attr("times");
+                            layer.close(pageindex)
+                        }
+                    }
+                    else
+                    {
+                    }
+
+                },
+                loginCallback: function () {
+                }
+            })
+        }
+
+        //监听提交
+        form.on('submit(EditForm{{suid}})', function (data) {
+            var data = form.val('EditForm{{ suid }}');
+            var index = $.inArray(data.typename, jsonForm);
+            if (index > -1) {
+                layer.alert("该分类已经存在，无法重复添加")
+                return false;
+            }
+            jsonForm.push(data.typename)
+            var data = form.val('EditForm{{ suid }}');
+            doPostSettingType('save',data.typename,jsonForm)
+            return false;
+        });
+
+    });
+</script>

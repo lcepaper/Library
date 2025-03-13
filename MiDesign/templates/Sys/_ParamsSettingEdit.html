@@ -1,0 +1,147 @@
+<form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+      lay-filter="EditForm{{ suid }}">
+    <input type="hidden" name="setid" value="0">
+    <div class="layui-form-item">
+        <label class="layui-form-label">选项分类</label>
+        <div class="layui-inline">
+            <select name="settype" style="width:200px"  lay-ignore class="layui-select" lay-filter="formfilter" lay-verify="required">
+                <option value="">请选择</option>
+                {% for item in drop %}
+                    <option value="{{ item}}">
+                        {{ item}}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选项名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="setname" lay-verify="required" autocomplete="off"
+                   placeholder="选项名称必填" class="layui-input">
+            <span class="error"></span>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选项值</label>
+        <div class="layui-input-block">
+            <input type="text" name="setvalue"
+                    autocomplete="off" lay-filter="formfilter" placeholder="选项值"
+                   class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+    <div class="layui-input-inline">
+        <label class="layui-form-label">颜色</label>
+        <div class="layui-input-block">
+            <input type="text" name="color" lay-verify="" autocomplete="off"
+                   placeholder="颜色"
+                   class="layui-input">
+
+            <span class="error"></span>
+        </div>
+    </div>
+        <span class="layui-inline" id="EditForm{{ suid }}forecolor"></span>
+    </div>
+
+
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="usestate" checked="checked"  value="1" lay-skin="primary" title="是否可用">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['form', 'colorpicker'], function () {
+
+        {% autoescape off %}
+            var jsonForm ={{ form}}
+        {% endautoescape %}
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , colorpicker = layui.colorpicker
+            , miniAdmin = layui.miniAdmin;
+        var thisValue = form.val('EditForm{{ suid }}', jsonForm);
+
+        var color = "";
+
+        if (thisValue.setid == 0) {
+            $('form[lay-filter="EditForm{{ suid }}"]').find("input[name='usestate']").val(1);
+
+        } else {
+            color=thisValue.color;
+            $('form[lay-filter="EditForm{{ suid }}"]').find("input[name='usestate']").val(jsonForm.usestate);
+        }
+
+        colorpicker.render({
+            elem: '#EditForm{{ suid }}forecolor',
+            color: color,
+            done: function (color) {
+                console.log(color)
+                $("form[lay-filter='EditForm{{ suid }}'] input[name='color']").val(color);
+            },
+            change: function (color) {
+                console.log(color)
+
+
+            }  //绑定元素
+        });
+
+
+        form.on('checkbox', function (data) {
+            var usestate = 0;
+            if (data.elem.name == 'usestate') {
+                if (this.checked) {
+                    usestate = 1;
+                }
+                $("form[lay-filter='EditForm{{ suid }}'] input[name='usestate']").val(usestate);
+            }
+            console.log(this.checked, data.elem.checked);
+        });
+        //监听提交
+        form.on('submit(EditForm{{ suid }})', function (data) {
+            debugger
+            var data = form.val('EditForm{{ suid }}');
+            $("form[lay-filter='EditForm{{ suid }}']  input[type=checkbox]").each(function() {
+                data[$(this).attr("name")]=$(this).val();
+            });
+
+            miniAdmin.postAjax({
+                url: "/paramssettingedit",
+                data: data,
+                posttype: "form",
+                callback: function (data) {
+                    if (data.status != 200) {
+                        if (data.listErr)
+                            miniAdmin.formerrsinfo('EditForm{{ suid }}', form, data.listErr);
+                        else if(data.msg)
+                        {
+                            layer.alert(data.msg)
+                        }
+                        return;
+                    }
+
+                    var pageindex = $(".layui-layer-page").attr("times");
+                    layer.close(pageindex)  //刷新页面
+                    miniAdmin.flshPage()
+
+
+                },
+                loginCallback: function () {
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

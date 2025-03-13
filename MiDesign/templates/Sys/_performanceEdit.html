@@ -1,0 +1,173 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/metroStyle/metroStyle.css' %}" type="text/css">
+<form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+      lay-filter="EditForm{{ suid }}">
+    <input type="hidden" name="pid_id"  value="">
+    <input type="hidden" name="id"  value="{{ id }}">
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">性能分类</label>
+            <div class="layui-input-block">
+                <input id="pinput" type="text" name="pname" value="" readonly="readonly" lay-verify="required" autocomplete="off"
+                       placeholder="性能分类" class="layui-input">
+                <span class="error"></span>
+                <div class="ztree{{ suid }}" style="display: none; position: absolute; z-index: 9000; background-color: #FFFFFF;  width: 100%;">
+                    <ul id="ztreeul{{ suid }}" class="ztree"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">性能名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="classificationname" value="" lay-verify="required|classificationname" autocomplete="off"
+                       placeholder="性能名称" class="layui-input">
+                <span class="error"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['form', 'layedit', 'colorpicker', 'ztree'], function () {
+
+        {% autoescape off %}
+            var jsonForm ={{ form}}
+        {% endautoescape %}
+
+        var $ = layui.jquery
+            , form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , colorpicker = layui.colorpicker
+            , miniAdmin = layui.miniAdmin;
+
+         var dropdown = layui.dropdown;
+
+        //初始赋值给表单
+        var thisValue = form.val('EditForm{{ suid }}', jsonForm);
+
+        var color = "";
+        if (thisValue.projectid == 0) {
+
+        } else {
+
+        }
+        form.verify({
+          classificationname: function(value, item) { //value：表单的值、item：表单的DOM对象
+              if(new RegExp("/<[^<>]+>/g").test(value)){
+                  return '性能名称只能填写纯文本';
+              }
+              if (value.length >= 32){
+                  return '性能名称不能超过32个字符'
+              }
+          }
+        });
+
+        function onClick2(e, treeId, treeNode) {
+
+                console.log('点击后', e)
+                console.log('点击后', treeId)
+                console.log(treeNode)  // 选中的数据
+                var form_data = form.val('EditForm{{ suid }}')
+                $.get('judgment?id=' + form_data.id + '&pid_id=' + treeNode.id, function (response, status, xhr){
+
+                    console.log(response)
+                    if (response.status === 200) {
+                         // 点击后把选中的数据填入表单value中
+                        form.val('EditForm{{ suid }}', {'pid_id':treeNode.id, 'pname':treeNode.classificationname})
+                    } else {
+                        layer.msg('不可选中子节点')
+                    }
+
+
+
+                })
+
+
+		}
+            var setting2 = {
+                view: {
+                    dblClickExpand: false
+                },
+                data: {
+                    simpleData: {
+                        // 表示使用简单字典数据列表
+                        enable: true,
+                        pIdKey: 'pid_id'
+                    },
+                    key : {
+                        name: 'classificationname'
+                    }
+                },
+                callback: {
+                    // beforeClick: beforeClick,  // 用于捕获单击节点之前的事件回调函数，并且根据返回值确定是否允许单击操作默认值：null
+                    onClick: onClick2
+                }
+            };
+            miniAdmin.CZtable('#ztreeul{{ suid }}', setting2)
+        // 点击input事件
+            $('#pinput').click(function(){
+                // 点击input显示隐藏树形组件
+                $('.ztree{{ suid }}').toggle();
+            })
+        // 点击内容全屏事件
+            $('.layui-layer-content').parents().click(function (e){
+                // 除了点击某个input和树形组件,以外的标签隐藏组件
+                // 没有点击到内容里的某个input隐藏树形组件
+                console.log($(e.target).closest('#pinput').length)
+                console.log($(e.target).closest('#ztreeul{{ suid }}').length)
+                if ($(e.target).closest('#pinput').length === 0 && $(e.target).closest('#ztreeul{{ suid }}').length === 0){
+                    $('.ztree{{ suid }}').css('display', 'none')
+                }
+            })
+
+
+        //监听提交
+        form.on('submit(EditForm{{ suid }})', function (data) {
+            debugger
+            var data = form.val('EditForm{{ suid }}');
+            var planname=data.planname;
+            miniAdmin.postAjax({
+                url: "/performanceedit",
+                data: data,
+                posttype: "form",
+                callback: function (data) {
+                    if (data.status === 400){
+                        layer.msg(data.msg)
+                    }
+                    if (data.status != 200) {
+                        //表单错误信息处理
+                        if('{{ callfunc }}'.length>0)
+                        {
+                            layer.msg(data.msg);
+                        }
+                        else
+                        miniAdmin.formerrsinfo('EditForm{{ suid }}', form, data.listErr);
+                    } else {
+
+                        //回调方法
+                        if('{{ callfunc }}'.length>0)
+                        {
+                            eval("{{ callfunc }}('"+planname+"',"+data.projectid+","+data.planid+")")
+                        }
+                        var pageindex = $(".layui-layer-page").attr("times");
+                        layer.close(pageindex)  //刷新页面
+                        miniAdmin.flshPage()
+                    }
+                },
+                loginCallback: function () {
+
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

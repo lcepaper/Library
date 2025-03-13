@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<link rel="stylesheet" href="{% static 'css/layui.css' %}">
+<link rel="stylesheet" href="{% static 'css/metroStyle/metroStyle.css' %}" type="text/css">
+<ul id="treedemo" class="ztree"></ul>
+<script type="text/javascript" src="../static/jquery.min.js"></script>
+<script src="../static/layui.js" charset="utf-8"></script>
+<script src="../static/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+{#<script src="../static/jquery.ztree.excheck.min.js" charset="utf-8"></script>#}
+
+<script>
+    layui.use(['jquery','form','ztree'], function () {
+
+        var $ = layui.jquery
+            , form = layui.form
+            , layer = layui.layer
+
+            , miniAdmin = layui.miniAdmin;
+
+
+        var zTreeObj
+        var settingduo = {
+                // treeId:'tree1',
+                view: {
+                    showIcon: false, // 是否显示图标
+                    showLine: false,
+                    // nameIsHTML: true //设置 name 属性是否支持 HTML 脚本
+                    {#addDiyDom: addDiyDom // 使用回调函数自定义select控件#}
+                },
+                check: {
+                    enable: true,
+                    chkStyle: "checkbox",
+                    chkboxType: { "Y" : "ps", "N" : "ps" }
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    {#onCheck: zTreeOnCheck,#}
+                    {#onExpand: zTreeOnExpandduo#}
+                }
+            };
+
+         var zNodesduo =[
+            { id:'振动-加速度',  name:"振动-加速度", open:true,checked:true,
+                children: [
+                    // { id:'特征1',"nocheck":true, name:'特征<select><option value="dog">加速度峰值</option><option value="dog">速度峰值</option><option value="dog">位移峰值</option></select>', "chkDisabled":true},
+                    { id:'特征1',"nocheck":true, name:'特征',dtype: 'jiasudu', "chkDisabled":true},
+                    { id:'1H', name:"1H",checked:true, poing: 'gewrherg'},
+                    { id:'2H', name:"2H",poing: 'wegwegegw'},
+                    { id:'3H', name:"3H",poing: 'herger'},
+                ]
+            },
+            { id:'振动-速度', name:"振动-速度",
+                children: [
+                    { id:'特征2', "nocheck":true, name:"特征",dtype: 'jiasudu', "chkDisabled":true},
+                    { id:'1V',  name:"1V",poing: 'gwqeg'},
+                    { id:'2V',  name:"2V",poing: 'heqrher'},
+                    { id:'3V',  name:"3V",poing: 'hqerherhh'},
+                ]
+            },
+            { id:'压力', name:"压力",
+                children: [
+                    { id:'1A',  name:"1A",poing: 'gwqeg'},
+                    { id:'2A',  name:"2A",poing: 'heqrher'},
+                    { id:'3A',  name:"3A",poing: 'hqerherhh'},
+                ]
+
+            }
+
+        ];
+        zTreeObj = $.fn.zTree.init($('#treedemo'), settingduo, zNodesduo)
+
+    })
+</script>
+</html>

@@ -1,0 +1,75 @@
+
+<div id="Tab{{ suid }}">
+<form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+      lay-filter="EditForm{{ suid }}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">软件名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="softname" lay-verify="required" autocomplete="off"
+                   placeholder="软件名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="company" lay-verify="required" autocomplete="off"
+                   placeholder="公司名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="required" autocomplete="off"
+                   placeholder="电话" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" lay-verify="required" autocomplete="off"
+                   placeholder="邮箱" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+        </div>
+    </div>
+</form>
+<script>
+    {% autoescape off %}
+        var jsonForm={{ form }}
+    {% endautoescape %}
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , miniAdmin = layui.miniAdmin;
+
+        var thisValue = form.val('EditForm{{ suid }}', jsonForm);
+        //监听提交
+        form.on('submit(EditForm{{suid}})', function (data) {
+            var data = form.val('EditForm{{ suid }}');
+            miniAdmin.postAjax({
+                url: "/setting",
+                data: {
+                    company: JSON.stringify(data)
+                },
+                callback: function (data) {
+                    if (data.status == 200)
+                    {
+
+                        layer.alert("提交成功")
+                    }
+
+                },
+                loginCallback: function () {
+                }
+            })
+            return false;
+        });
+
+    });
+</script>
+</div>

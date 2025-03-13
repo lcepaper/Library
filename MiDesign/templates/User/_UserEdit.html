@@ -1,0 +1,219 @@
+<form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+      lay-filter="UserEditForm{{ suid }}">
+    <input type="hidden" name="uid" value="0">
+    <div class="layui-form-item">
+        <label class="layui-form-label">账户</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" lay-verify="required|username" autocomplete="off"
+                   placeholder="账号" class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密 码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password"
+                   lay-verify="required|password" autocomplete="off" placeholder="密码"
+                   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">重复密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="repassword" autocomplete="off"
+                   placeholder="重复密码"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">真实姓名</label>
+        <div class="layui-input-block">
+            <input type="text" name="realname" lay-verify="" autocomplete="off"
+                   placeholder="真实姓名"
+                   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-block">
+            <input type="email" name="email" lay-verify="" autocomplete="off"
+                   placeholder="管理员-邮箱必填"
+                   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-block">
+            <input type="text" name="depname" lay-verify="" autocomplete="off"
+                   placeholder="部门名称"
+                   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机</label>
+        <div class="layui-input-block">
+            <input type="tel" name="phone" lay-verify="" autocomplete="off"
+                   placeholder="手机"
+                   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="usersex" value="男" lay-skin="primary" title="男">
+            <input type="radio" name="usersex" value="女" lay-skin="primary" title="女">
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="is_superuser" value="" lay-skin="primary" title="是否超级管理员">
+            <input type="checkbox" name="is_active" checked value="true" lay-skin="primary" title="是否激活">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="note" lay-verify="" autocomplete="off" placeholder=""
+                      class="layui-textarea"></textarea>
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+
+        {% autoescape off %}
+            var jsonForm={{ form}}
+        {% endautoescape %}
+
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , miniAdmin = layui.miniAdmin;
+
+        debugger;
+
+        //自定义验证规则
+        form.verify({
+            username: function (value) {
+                if (value.length < 5) {
+                    return '账号至少得5个字符';
+                }
+            },
+            password: [/(.+){6,12}$/, '密码必须6到12位'],
+            confirmPass: function (value) {
+                if ($('input[name=password]').val() !== value)
+                    return '两次密码输入不一致！';
+            }
+
+        });
+
+         //alert(JSON.stringify(jsonForm));
+        //初始赋值
+        var thisValue = form.val('UserEditForm{{ suid }}', jsonForm);
+
+        if (thisValue.uid*1 == 0) {
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='is_superuser']").val(false);
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='is_active']").val(true);
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='repassword']").attr("lay-verify", 'required|confirmPass');
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='password']").attr("lay-verify", 'required|password');
+        } else {
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='is_superuser']").val(jsonForm.is_superuser);
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='is_active']").val(jsonForm.is_active);
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='password']").attr("lay-verify", '');
+            $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='repassword']").attr("lay-verify", '');
+        }
+        form.on('checkbox', function (data) {
+            var issupper = false;
+            var isactive = false;
+            if (data.elem.name == 'is_superuser') {
+                if (this.checked) {
+                    $("form[lay-filter='UserEditForm{{ suid }}'] input[name='email']").attr("lay-verify", "required")
+                    issupper = true;
+                } else {
+                    $("form[lay-filter='UserEditForm{{ suid }}'] input[name='email']").attr("lay-verify", "")
+                }
+                $("form[lay-filter='UserEditForm{{ suid }}'] input[name='is_superuser']").val(issupper);
+            }
+            if (data.elem.name == 'is_active') {
+                if (this.checked)
+                    isactive = true;
+
+                $("form[lay-filter='UserEditForm{{ suid }}'] input[name='is_active']").val(isactive);
+            }
+            console.log(this.checked, data.elem.checked);
+        });
+
+        form.on('radio', function (data) {
+            console.log(data);
+        });
+
+        $("form[lay-filter='UserEditForm{{ suid }}'] input[name='password']").on("input", function (e) {
+
+        if(thisValue*1>0)
+        {
+            //获取input输入的值
+            var value = e.delegateTarget.value;
+            if (value.length > 0) {
+                $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='password']").attr("lay-verify", 'password');
+                $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='repassword']").attr("lay-verify", 'required|confirmPass');
+            } else {
+                $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='password']").attr("lay-verify", '');
+                $('form[lay-filter="UserEditForm{{ suid }}"]').find("input[name='repassword']").attr("lay-verify", '');
+            }
+
+        }
+
+        });
+
+        //监听提交
+        form.on('submit(UserEditForm{{ suid }})', function (data) {
+            debugger
+            var data = form.val('UserEditForm{{ suid }}');
+            //alert(JSON.stringify(data))
+
+            $("form[lay-filter='UserEditForm{{ suid }}']  input[type=checkbox]").each(function() {
+                data[$(this).attr("name")]=$(this).val();
+            });
+
+            debugger;
+
+            miniAdmin.postAjax({
+                url: "/useredit",
+                data: data,
+                posttype: "form",
+                callback: function (data) {
+                    if (data.status != 200) {
+                        //表单错误信息处理
+                        miniAdmin.formerrsinfo('EditForm{{ suid }}',form,data.listErr);
+                    } else {
+                        var pageindex = $(".layui-layer-page").attr("times");
+                        layer.close(pageindex)  //刷新页面
+                        miniAdmin.flshPage()
+                    }
+                },
+                loginCallback: function () {
+                    debugger;
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

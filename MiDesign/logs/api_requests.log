@@ -1,0 +1,74 @@
+2025-03-13 13:42:53,783 - INFO - GET - /login - 200 - 0.0249s - params: {"next": "/admin"}
+2025-03-13 13:42:59,074 - INFO - POST - /login - 302 - 0.2302s - params: {"csrfmiddlewaretoken": "xI2cmMtS0dfgwmcqHVm1ZcZZrCZe6AianjneJ4IcasCrf0wnky2ySl1jHNIFcdEu", "username": "admin", "password": "123456"}
+2025-03-13 13:42:59,087 - INFO - GET - /admin - 200 - 0.0050s - params: {}
+2025-03-13 13:42:59,242 - INFO - GET - /material - 200 - 0.0050s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:42:59,332 - INFO - GET - /menu - 200 - 0.0230s - params: {}
+2025-03-13 13:43:38,175 - INFO - GET - /books - 200 - 0.0498s - params: {}
+2025-03-13 13:43:38,193 - INFO - GET - /books - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:44:06,425 - INFO - GET - /menumodule - 200 - 0.0275s - params: {}
+2025-03-13 13:44:12,702 - INFO - GET - /experiment - 200 - 0.0349s - params: {}
+2025-03-13 13:44:12,739 - INFO - GET - /experiment - 200 - 0.0069s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:14,027 - INFO - GET - /inquire - 200 - 0.0299s - params: {}
+2025-03-13 13:44:14,048 - INFO - GET - /inquire - 200 - 0.0090s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:18,403 - INFO - DELETE - /experimentedit - 200 - 0.0130s - params: {}
+2025-03-13 13:44:18,420 - INFO - GET - /experiment - 200 - 0.0050s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:19,902 - INFO - DELETE - /experimentedit - 200 - 0.0090s - params: {}
+2025-03-13 13:44:19,918 - INFO - GET - /experiment - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:22,309 - INFO - DELETE - /materialedit - 200 - 0.0070s - params: {}
+2025-03-13 13:44:22,339 - INFO - GET - /material - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:24,171 - INFO - DELETE - /materialedit - 200 - 0.0108s - params: {}
+2025-03-13 13:44:24,183 - INFO - GET - /material - 200 - 0.0010s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:28,648 - INFO - GET - /admin - 200 - 0.0020s - params: {}
+2025-03-13 13:44:28,783 - INFO - GET - /material - 200 - 0.0030s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:28,910 - INFO - GET - /menu - 200 - 0.0372s - params: {}
+2025-03-13 13:44:31,317 - INFO - GET - /experiment - 200 - 0.0020s - params: {}
+2025-03-13 13:44:31,334 - INFO - GET - /experiment - 200 - 0.0025s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:32,043 - INFO - GET - /inquire - 200 - 0.0010s - params: {}
+2025-03-13 13:44:32,059 - INFO - GET - /inquire - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:44:34,150 - INFO - GET - /user - 200 - 0.0010s - params: {}
+2025-03-13 13:44:34,170 - INFO - GET - /user - 200 - 0.0060s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:44:35,716 - INFO - GET - /paramssetting - 200 - 0.0491s - params: {}
+2025-03-13 13:44:35,734 - INFO - GET - /paramssetting - 200 - 0.0060s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:44:38,762 - INFO - GET - /performance - 200 - 0.0469s - params: {}
+2025-03-13 13:44:38,779 - INFO - GET - /performance - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:44:41,027 - INFO - GET - /menumodule - 200 - 0.0052s - params: {}
+2025-03-13 13:44:50,239 - INFO - DELETE - /menumodule - 200 - 0.0060s - params: {}
+2025-03-13 13:45:06,309 - INFO - GET - /admin - 200 - 0.0050s - params: {}
+2025-03-13 13:45:06,448 - INFO - GET - /material - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:45:06,533 - INFO - GET - /menu - 200 - 0.0130s - params: {}
+2025-03-13 13:45:06,550 - INFO - GET - /menumodule - 200 - 0.0020s - params: {}
+2025-03-13 13:45:14,326 - INFO - DELETE - /menumodule - 200 - 0.0087s - params: {}
+2025-03-13 13:45:16,296 - INFO - GET - /admin - 200 - 0.0030s - params: {}
+2025-03-13 13:45:16,397 - INFO - GET - /material - 200 - 0.0030s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:45:16,480 - INFO - GET - /menu - 200 - 0.0121s - params: {}
+2025-03-13 13:45:16,498 - INFO - GET - /menumodule - 200 - 0.0030s - params: {}
+2025-03-13 13:45:22,664 - INFO - DELETE - /menumodule - 200 - 0.0050s - params: {}
+2025-03-13 13:45:23,758 - INFO - GET - /admin - 200 - 0.0030s - params: {}
+2025-03-13 13:45:23,853 - INFO - GET - /material - 200 - 0.0020s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:45:23,939 - INFO - GET - /menu - 200 - 0.0106s - params: {}
+2025-03-13 13:45:23,954 - INFO - GET - /menumodule - 200 - 0.0030s - params: {}
+2025-03-13 13:45:32,817 - INFO - DELETE - /menumodule - 200 - 0.0060s - params: {}
+2025-03-13 13:45:35,002 - INFO - GET - /admin - 200 - 0.0030s - params: {}
+2025-03-13 13:45:35,097 - INFO - GET - /material - 200 - 0.0020s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:45:35,185 - INFO - GET - /menu - 200 - 0.0095s - params: {}
+2025-03-13 13:45:35,202 - INFO - GET - /menumodule - 200 - 0.0030s - params: {}
+2025-03-13 13:45:42,014 - INFO - DELETE - /menumodule - 200 - 0.0050s - params: {}
+2025-03-13 13:45:43,039 - INFO - GET - /admin - 200 - 0.0036s - params: {}
+2025-03-13 13:45:43,150 - INFO - GET - /material - 200 - 0.0030s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:45:43,229 - INFO - GET - /menu - 200 - 0.0090s - params: {}
+2025-03-13 13:45:43,243 - INFO - GET - /menumodule - 200 - 0.0020s - params: {}
+2025-03-13 13:54:43,546 - INFO - GET - /login - 200 - 0.0086s - params: {"next": "/admin"}
+2025-03-13 13:54:49,115 - INFO - POST - /login - 302 - 0.2229s - params: {"csrfmiddlewaretoken": "2ZEw68EOtFUdPw1h5Y5CF8HiPm8asNnVtt4khlpDNYBDWQjWgr8MvDuWAkvQNUJ9", "username": "admin", "password": "123456"}
+2025-03-13 13:54:49,140 - INFO - GET - /admin - 200 - 0.0030s - params: {}
+2025-03-13 13:54:49,350 - INFO - GET - /material - 404 - 0.0471s - params: {"pageindex": "1", "pagesize": "10"}
+2025-03-13 13:54:49,404 - INFO - GET - /menu - 200 - 0.0100s - params: {}
+2025-03-13 13:54:49,420 - INFO - GET - /menumodule - 200 - 0.0030s - params: {}
+2025-03-13 13:54:52,429 - INFO - GET - /user - 200 - 0.0010s - params: {}
+2025-03-13 13:54:52,455 - INFO - GET - /user - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:54:54,022 - INFO - GET - /books - 200 - 0.0010s - params: {}
+2025-03-13 13:54:54,039 - INFO - GET - /books - 200 - 0.0040s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:54:58,028 - INFO - GET - /borrowrecord - 200 - 0.0339s - params: {"id": "6"}
+2025-03-13 13:55:02,811 - INFO - POST - /borrowrecord - 200 - 0.0170s - params: {"{\"id\":\"6\",\"uselis\":[{\"title\":\"admin\",\"value\":1},{\"title\":\"admin1\",\"value\":25},{\"title\":\"123456\",\"value\":2}]}": "", "id": "6", "uselis": [{"title": "admin", "value": 1}, {"title": "admin1", "value": 25}, {"title": "123456", "value": 2}]}
+2025-03-13 13:55:02,820 - INFO - GET - /books - 200 - 0.0020s - params: {}
+2025-03-13 13:55:02,838 - INFO - GET - /books - 200 - 0.0030s - params: {"pageindex": "1", "pagesize": "15"}
+2025-03-13 13:55:03,749 - INFO - GET - /borrowrecord - 200 - 0.0030s - params: {"id": "6"}

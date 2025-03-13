@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+ <html>
+ 	<head>
+ 		<meta charset="utf-8">
+ 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+ 		<title>用户管理</title>
+ 		<link rel="stylesheet" href="../src/css/layui.css">
+<style>
+	.site-demo-title {
+	    position: fixed;
+	    left: 200px;
+	    right: 0;
+	    top: 60px;
+	    padding-top: 5px;
+	    z-index: 997;
+	    background: #fff;
+	}
+	.layui-layout-admin .site-demo-body {
+	    top: 106px;
+	}
+	
+	.searbox{
+		display: flex;
+		align-items: center;
+	}
+	.searbox .layui-btn{
+		margin: 0px;
+	}
+	.searbox input{
+		width:200px;
+		height:32px;
+		margin: 0;
+	}
+</style>
+ 	</head>
+ 	<body>
+
+ 		<div class="layui-layout layui-layout-admin">
+ 			<div class="layui-header">
+ 				<div class="layui-logo">多学科人工智能设计平台</div>
+ 				<!-- 头部区域（可配合layui 已有的水平导航） -->
+ 				<ul class="layui-nav layui-layout-left">
+ 					<li class="layui-nav-item"><a href="">流程建模</a></li>
+ 					<li class="layui-nav-item"><a href="">优化研究</a></li>
+ 					<li class="layui-nav-item"><a href="">状态监控</a></li>
+ 					<!--   <li class="layui-nav-item">
+        <a href="javascript:;">nav groups</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">menu 11</a></dd>
+          <dd><a href="">menu 22</a></dd>
+          <dd><a href="">menu 33</a></dd>
+        </dl>
+      </li> -->
+ 				</ul>
+ 				<ul class="layui-nav layui-layout-right">
+ 					<li class="layui-nav-item">
+ 						<a href="javascript:;">
+ 							<img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
+ 								class="layui-nav-img">
+ 							admin
+ 						</a>
+ 						<dl class="layui-nav-child">
+ 							<dd><a href="">修改密码</a></dd>
+ 							<!--     <dd><a href="">set 2</a></dd> -->
+ 						</dl>
+ 					</li>
+ 					<li class="layui-nav-item"><a href="">退出系统</a></li>
+ 				</ul>
+ 			</div>
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			 <ul class="layui-nav layui-nav-tree" lay-filter="test">
+			 	<li class="layui-nav-item "><a href="admin.html">面板管理</a></li>
+			     <li class="layui-nav-item layui-nav-itemed ">
+			       <a class="" href="javascript:;">系统设置</a>
+			       <dl class="layui-nav-child">
+			         <dd><a href="javascript:;">菜单管理</a></dd>
+			         <dd ><a href="ParmsSet.html">参数配置</a></dd>
+			         <dd><a href="SysSet.html">系统设置</a></dd>
+			 		<dd  class="layui-this"><a href="UserList.html">用户管理</a></dd>
+			       </dl>
+			     </li>
+			     <li class="layui-nav-item">
+			       <a href="javascript:;">平台管理</a>
+			       <dl class="layui-nav-child">
+			 		<dd><a href="javascript:;">项目代号管理</a></dd>
+			         <dd><a href="Project.html">项目管理</a></dd>
+			 		<dd><a href="javascript:;">服务器管理</a></dd>
+			         <dd><a href="">软件管理</a></dd>
+			       </dl>
+			     </li>
+			     <li class="layui-nav-item"><a href="javascript:;">NNI集成配置</a></li>
+			 <!--    <li class="layui-nav-item"><a href="">the links</a></li> -->
+			   </ul>
+			</div>
+		</div>
+ 			<div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
+ 				<ul class="layui-tab-title site-demo-title">
+ 					<li class="layui-this">用户列表</li>
+ 				<!-- 	<li>查看代码</li>
+ 					<li>帮助</li> -->
+ 				</ul>
+ 				<div class="layui-body layui-tab-content site-demo site-demo-body">
+					   <div class="layui-tab-item layui-show">
+					        <div class="layui-main">
+ 					<script type="text/html" id="toolbarDemo">
+ 						<div class="layui-btn-container">
+						<div class="searbox">
+						<input class="layui-input" type="text" />
+						<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">查询</button>
+						</div>
+						
+ 						<!-- <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+ 							<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+ 							<button class="layui-btn layui-btn-sm" lay-event="getData">获取当前页所有数据</button>
+ 							<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+ 							<button class="layui-btn layui-btn-sm" lay-event="reload">重载（保留初始参数）</button>
+ 							<button class="layui-btn layui-btn-sm" lay-event="reload2">重载（不保留初始参数）</button> -->
+ 						</div>
+ 					</script>
+
+ 					<table id="test" lay-filter="test"></table>
+
+ 					<script type="text/html" id="barDemo">
+ 						<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+ 						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+ 					</script>
+
+ 					<script type="text/html" id="usernameTpl">
+ 						<a href="" class="layui-table-link">{{d.username || ''}}</a>
+ 					</script>
+
+ 					<script type="text/html" id="switchTpl">
+ 						<input type="checkbox" name="yyy" lay-skin="switch" lay-text="女|男">
+ 					</script>
+
+ 					<script type="text/html" id="cityTpl">
+ 						<select lay-ignore>
+ 							<option value="浙江杭州">浙江杭州</option>
+ 							<option value="江西南昌">江西南昌</option>
+ 							<option value="湖北武汉">湖北武汉</option>
+ 						</select>
+ 					</script>
+
+ 					<script type="text/html" id="checkboxTpl">
+ 						<input type="checkbox" name="" title="锁定" checked>
+ 					</script>
+
+ 					<script type="text/html" id="LAY_table_tpl_email">
+ 						<span {{# if(!d.activate){ }}style="color:#999" {{# } }}>{{ d.email }}</span>
+ 					</script>
+</div>
+</div>
+ 				</div>
+ 			</div>
+ 			<div class="layui-footer footer-demo">
+ 				<div class="layui-container">
+ 					<p>© 2021 <a href="/">中广核-多学科智能设计平台</a> MIT license</p>
+ 					<p>
+ 						<a href="/about/disclaimer.html" target="_blank">免责声明</a>
+ 						<a href="/about/relatedlinks.html" target="_blank">友链</a>
+ 						<a href="javascript:;" site-event="weixinmp">公众号</a>
+ 						<a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">赣ICP备13006272号-2</a>
+ 					</p>
+
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<script src="../src/layui.js"></script>
+ 		<script>
+			layui.use('element', function(){
+			  var element = layui.element;
+			});
+ 			//JavaScript代码区域
+ 			layui.use('table',function() {
+ 				var table = layui.table;
+			
+ 				//全局设定某参数
+ 				table.set({
+ 					where: {
+ 						token: '默认 token 参数'
+ 					}
+ 					//,defaultToolbar: ['filter']
+ 					,
+ 					limit: 30
+ 					//,url: 'list'
+ 					//,height: 300
+ 				});
+
+ 				//渲染
+ 				window.ins1 = table.render({
+ 					elem: '#test',
+ 					height: 500
+ 						//,width: 600
+ 						,
+ 					title: '用户数据表',
+ 					url: 'json/table/demo1.json'
+ 						//,size: 'lg'
+ 						,
+ 					page: {
+
+ 					}
+
+ 					//,autoSort: false //是否自动排序。如果否，则由服务端排序
+ 					//,loading: false
+ 					,
+ 					totalRow: true,
+ 					limit: 30,
+ 					toolbar: '#toolbarDemo',
+ 					defaultToolbar: ['filter', 'exports', 'print', {
+ 						title: '帮助',
+ 						layEvent: 'LAYTABLE_TIPS',
+ 						icon: 'layui-icon-tips'
+ 					}],
+ 					cols: [
+ 							[{
+ 								type: 'checkbox',
+ 								fixed: 'left'
+ 							}, {
+ 								field: 'id',
+ 								title: 'ID',
+ 								width: 80,
+ 								fixed: 'left',
+ 								unresize: true,
+ 								sort: true,
+ 								totalRowText: '合计：'
+ 							}, {
+ 								field: 'username',
+ 								title: '用户名',
+ 								width: 120,
+ 								edit: 'text',
+ 								templet: '#usernameTpl'
+ 							}, {
+ 								field: 'email',
+ 								title: '邮箱',
+ 								hide: 0,
+ 								width: 150,
+ 								edit: 'text',
+ 								templet: function(d) {
+ 									return '<em>' + d.email + '</em>'
+ 								}
+ 							}, {
+ 								field: 'sex',
+ 								title: '性别',
+ 								width: 80,
+ 								edit: 'text',
+ 								sort: true
+ 							}, {
+ 								field: 'city',
+ 								title: '城市',
+ 								width: 120,
+ 								templet: '#cityTpl1'
+ 							}, {
+ 								field: 'sign',
+ 								title: '签名'
+ 							}, {
+ 								field: 'experience',
+ 								title: '积分',
+ 								width: 80,
+ 								sort: true,
+ 								totalRow: '{{ d.TOTAL_NUMS }} 分',
+ 								templet: '<div>{{ d.experience }} 分</div>'
+ 							}, {
+ 								field: 'ip',
+ 								title: 'IP',
+ 								width: 120
+ 							}, {
+ 								field: 'logins',
+ 								title: '登入次数',
+ 								width: 100,
+ 								sort: true,
+ 								totalRow: true
+ 							}, {
+ 								field: 'joinTime',
+ 								title: '加入时间',
+ 								width: 120
+ 							}, {
+ 								fixed: 'right',
+ 								title: '操作',
+ 								toolbar: '#barDemo',
+ 								width: 150
+ 							}]
+ 						]
+
+ 						,
+ 					initSort1: {
+ 						field: 'experience' //排序字段，对应 cols 设定的各字段名
+ 							,
+ 						type: 'desc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+ 					}
+
+ 					,
+ 					headers: {
+ 						headers_token: 'sasasas'
+ 					},
+ 					where: {
+ 						test: '初始 test 参数',
+ 						token: '初始 token',
+ 						key: 'experience',
+ 						order: 'asc'
+ 					}
+
+ 					,
+ 					error: function(res, msg) {
+ 						console.log(res, msg)
+ 					}
+
+ 					/*
+ 					,response: {
+ 					  statusName: 'status'
+ 					  ,statusCode: 200
+ 					}
+ 					,parseData: function(res){
+ 					  return {
+ 					    "status": res.status
+ 					    ,"msg": res.message
+ 					    ,"count": res.total
+ 					    ,"data": res.data.list
+ 					  };
+ 					}
+ 					*/
+ 				});
+
+ 				//排序事件
+ 				table.on('sort(test)', function(obj) {
+ 					console.log(obj);
+
+ 					return;
+ 					layer.msg('服务端排序。order by ' + obj.field + ' ' + obj.type);
+ 					//服务端排序
+ 					table.reload('test', {
+ 						initSort: obj
+ 							//,page: {curr: 1} //重新从第一页开始
+ 							,
+ 						where: { //重新请求服务端
+ 							key: obj.field //排序字段
+ 								,
+ 							order: obj.type //排序方式
+ 						}
+ 					}, true);
+ 				});
+
+ 				//工具栏事件
+ 				table.on('toolbar(test)', function(obj) {
+ 					var checkStatus = table.checkStatus(obj.config.id);
+ 					switch (obj.event) {
+ 						case 'add':
+ 							layer.msg('添加');
+ 							break;
+ 						case 'update':
+ 							layer.msg('编辑');
+ 							break;
+ 						case 'delete':
+ 							layer.msg('删除');
+ 							break;
+ 						case 'getCheckData':
+ 							var data = checkStatus.data;
+ 							layer.alert(JSON.stringify(data));
+ 							break;
+ 						case 'getCheckLength':
+ 							var data = checkStatus.data;
+ 							layer.msg('选中了：' + data.length + ' 个');
+ 							break;
+ 						case 'getData':
+ 							var getData = table.getData(obj.config.id);
+ 							console.log(getData);
+ 							layer.alert(JSON.stringify(getData));
+ 							break;
+ 						case 'isAll':
+ 							layer.msg(checkStatus.isAll ? '全选' : '未全选')
+ 							break;
+ 						case 'LAYTABLE_TIPS':
+ 							layer.alert('Table for layui-v' + layui.v);
+ 							break;
+ 						case 'reload':
+ 							//深度重载
+ 							var instReload = table.reload('test', {
+
+ 								where: {
+ 									abc: 123,
+ 									test: '新的 test1'
+ 								},
+ 								page: {
+ 									curr: 5,
+ 									limit: 20
+ 								},
+ 								cols: ins1.config.cols
+ 								//,height: 300
+ 								//,url: 'x'
+ 							}, true);
+ 							break;
+ 						case 'reload2':
+ 							//浅重载
+ 							table.reload('test', {
+ 								where: {
+ 									efg: 'sasasas'
+ 									//,test: '新的 test2'
+ 									//,token: '新的 token2'
+ 								},
+ 								cols: [
+ 									[{
+ 										type: 'checkbox',
+ 										fixed: 'left'
+ 									}, {
+ 										field: 'id',
+ 										title: 'ID',
+ 										width: 80,
+ 										fixed: 'left',
+ 										unresize: true,
+ 										sort: true,
+ 										totalRowText: '合计：'
+ 									}, {
+ 										field: 'sex',
+ 										title: '性别',
+ 										width: 80,
+ 										edit: 'text',
+ 										sort: true
+ 									}, {
+ 										field: 'experience',
+ 										title: '积分',
+ 										width: 80,
+ 										sort: true,
+ 										totalRow: true,
+ 										templet: '<div>{{ d.experience }} 分</div>'
+ 									}, {
+ 										field: 'logins',
+ 										title: '登入次数',
+ 										width: 100,
+ 										sort: true,
+ 										totalRow: true
+ 									}, {
+ 										field: 'joinTime',
+ 										title: '加入时间',
+ 										width: 120
+ 									}]
+ 								]
+ 								//,height: 500
+ 							});
+ 							break;
+ 					};
+ 				});
+
+ 				table.on('row(test)', function(obj) {
+ 					console.log(obj);
+ 					//layer.closeAll('tips');
+ 				});
+
+
+
+ 				table.render({
+ 					elem: '#test2',
+ 					url: 'json/table/demo1.json',
+ 					contentType: 'application/json',
+ 					page: { //详细参数可参考 laypage 组件文档
+ 						curr: 5,
+ 						groups: 1,
+ 						first: false,
+ 						last: false,
+ 						layout: ['limit', 'prev', 'page', 'next', 'count'] //自定义分页布局
+ 					}
+ 					//,height: 300
+ 					,
+ 					cellMinWidth: 80
+ 						//,skin: 'line'
+ 						,
+ 					toolbar: true,
+ 					cols: [
+ 						[{
+ 								field: 'id',
+ 								hide: true
+ 							}, {
+ 								field: 'username',
+ 								title: '用户名'
+ 							}, {
+ 								field: 'email',
+ 								title: '邮箱'
+ 							}, {
+ 								title: '操作',
+ 								align: 'center',
+ 								toolbar: '#barDemo'
+ 							}
+ 							/*
+ 							{type:'numbers'}
+ 							,{field:'id', title:'ID', unresize: true, sort: true}
+ 							,{field:'username', title:'用户名', templet: '#usernameTpl'}
+ 							,{field:'email', title:'邮箱'}
+ 							,{xfield:'sex', title:'性别', templet: '#switchTpl', minWidth: 85, align:'center'}
+ 							,{field:'lock', title:'是否锁定', templet: '#checkboxTpl', minWidth: 110, align:'center'}
+ 							,{field:'city', title:'城市'}
+ 							*/
+ 						]
+ 					]
+ 				});
+
+ 				//监听表格行点击
+ 				table.on('tr', function(obj) {
+ 					console.log(obj)
+ 				});
+
+ 				//监听表格复选框选择
+ 				table.on('checkbox(test)', function(obj) {
+ 					console.log(obj)
+ 				});
+
+ 				//监听表格单选框选择
+ 				table.on('radio(test)', function(obj) {
+ 					console.log(obj)
+ 				});
+
+ 				//监听表格单选框选择
+ 				table.on('rowDouble(test)', function(obj) {
+ 					console.log(obj);
+ 				});
+
+ 				//监听单元格编辑
+ 				table.on('edit(test)', function(obj) {
+ 					var value = obj.value //得到修改后的值
+ 						,
+ 						data = obj.data //得到所在行所有键值
+ 						,
+ 						field = obj.field; //得到字段
+
+ 					console.log(obj)
+ 				});
+
+ 				//监听行工具事件
+ 				table.on('tool(test)', function(obj) {
+ 					var data = obj.data;
+ 					//console.log(obj)
+ 					if (obj.event === 'del') {
+ 						layer.confirm('真的删除行么', function(index) {
+ 							obj.del();
+ 							layer.close(index);
+ 						});
+ 					} else if (obj.event === 'edit') {
+ 						layer.prompt({
+ 							formType: 2,
+ 							value: data.email
+ 						}, function(value, index) {
+ 							obj.update({
+ 								email: value
+ 							});
+ 							layer.close(index);
+ 						});
+ 					}
+ 				});
+
+ 				//return;
+
+ 				//直接赋值数据
+ 				table.render({
+ 					elem: '#demo'
+ 						//,width: 900
+ 						//,height: 274
+ 						,
+ 					cols: [
+ 						[ //标题栏
+ 							{
+ 								type: 'checkbox',
+ 								LAY_CHECKED: true
+ 							}, {
+ 								field: 'id',
+ 								title: 'ID',
+ 								width: 80,
+ 								sort: true
+ 							}, {
+ 								type: 'space',
+ 								width: 100
+ 							} //空列
+ 							, {
+ 								field: 'username',
+ 								title: '用户名',
+ 								width: 120
+ 							}, {
+ 								field: 'email',
+ 								title: '邮箱',
+ 								width: 150
+ 							}, {
+ 								field: 'sign',
+ 								title: '签名',
+ 								width: 150
+ 							}, {
+ 								field: 'sex',
+ 								title: '性别',
+ 								width: 80
+ 							}, {
+ 								field: 'city',
+ 								title: '城市',
+ 								width: 100
+ 							}, {
+ 								field: 'experience',
+ 								title: '积分',
+ 								width: 80,
+ 								sort: true
+ 							}
+ 						]
+ 					],
+ 					data: [{
+ 							"id": "10001",
+ 							"username": "杜甫",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "116",
+ 							"ip": "192.168.0.8",
+ 							"logins": "108",
+ 							"joinTime": "2016-10-14"
+ 						}, {
+ 							"id": "10002",
+ 							"username": "李白",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "12",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14",
+ 							"LAY_CHECKED": true
+ 						}, {
+ 							"id": "10003",
+ 							"username": "王勃",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "65",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14"
+ 						}, {
+ 							"id": "10004",
+ 							"username": "贤心",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "666",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14"
+ 						}, {
+ 							"id": "10005",
+ 							"username": "贤心",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "86",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14"
+ 						}, {
+ 							"id": "10006",
+ 							"username": "贤心",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "12",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14"
+ 						}, {
+ 							"id": "10007",
+ 							"username": "贤心",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "16",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14"
+ 						}, {
+ 							"id": "10008",
+ 							"username": "贤心",
+ 							"email": "xianxin@layui.com",
+ 							"sex": "男",
+ 							"city": "浙江杭州",
+ 							"sign": "人生恰似一场修行",
+ 							"experience": "106",
+ 							"ip": "192.168.0.8",
+ 							"logins": "106",
+ 							"joinTime": "2016-10-14"
+ 						}]
+
+ 						,
+ 					skin: 'row' //表格风格
+ 						,
+ 					even: true
+ 						//,size: 'lg' //尺寸
+
+ 						,
+ 					page: true //是否显示分页
+ 						,
+ 					limits: [3, 5, 10],
+ 					limit: 3 //每页默认显示的数量
+ 					//,loading: false //请求数据时，是否显示loading
+ 				});
+
+
+ 				var $ = layui.jquery,
+ 					active = {
+ 						parseTable: function() {
+ 							table.init('parse-table-demo', {
+ 								limit: 3
+ 							});
+ 						},
+ 						add: function() {
+ 							table.addRow('test')
+ 						}
+ 					};
+ 				$('i').on('click', function() {
+ 					var type = $(this).data('type');
+ 					active[type] ? active[type].call(this) : '';
+ 				});
+ 				$('.layui-btn').on('click', function() {
+ 					var type = $(this).data('type');
+ 					active[type] ? active[type].call(this) : '';
+ 				});
+ 			});
+ 		</script>
+ 	</body>
+ </html>

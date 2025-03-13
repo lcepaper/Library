@@ -1,0 +1,63 @@
+<form   class="layui-form layui-form-pane1"  style="padding: 12px" method="post"   lay-filter="EditForm{{ suid }}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">原始密码</label>
+        <div class="layui-input-block">
+            <input type="password" value="" name="oldpwd" lay-verify="required|password" autocomplete="off"
+                   placeholder="原始密码"   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">修改密码</label>
+        <div class="layui-input-block">
+            <input type="password" value="" name="password" lay-verify="required|password" autocomplete="off"
+                   placeholder="修改密码"   class="layui-input">
+            <span class="error"></span>
+        </div>
+    </div>
+    <div class="layui-col-sm12 layui-col-md12">
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+    </div>
+</form>
+<script>
+    layui.use(['form', 'layedit'], function () {
+        var $ = layui.jquery;
+        var form = layui.form
+            , layer = layui.layer
+            , miniAdmin = layui.miniAdmin;
+        //监听提交
+        form.on('submit(EditForm{{suid}})', function (data) {
+            var data = form.val('EditForm{{ suid }}');
+
+            miniAdmin.postAjax({
+                url: "/uppwd",
+                data: data,
+                posttype: "form",
+                callback: function (data) {
+                    debugger
+                    if (data.status != 200) {
+                        if (data.listErr)
+                            miniAdmin.formerrsinfo('EditForm{{ suid }}', form, data.listErr);
+                        else if(data.msg)
+                        {
+                            layer.alert(data.msg)
+                        }
+                        return;
+                    }
+                    var pageindex = $(".layui-layer-page").attr("times");
+                    layer.close(pageindex)  //刷新页面
+                    miniAdmin.flshPage()
+                },
+                loginCallback: function () {
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

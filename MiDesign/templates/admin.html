@@ -1,0 +1,83 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>layout 大布局 - Layui</title>
+<link rel="stylesheet" href="../src/css/layui.css">
+ 
+</head>
+<body>
+
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">多学科人工智能设计平台</div>
+    <!-- 头部区域（可配合layui 已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="">流程建模</a></li>
+      <li class="layui-nav-item"><a href="">优化研究</a></li>
+      <li class="layui-nav-item"><a href="">状态监控</a></li>
+   <!--   <li class="layui-nav-item">
+        <a href="javascript:;">nav groups</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">menu 11</a></dd>
+          <dd><a href="">menu 22</a></dd>
+          <dd><a href="">menu 33</a></dd>
+        </dl>
+      </li> -->
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+		<li class="layui-nav-item layui-hide-xs" lay-unselect="">
+		        <a href="javascript:;" layadmin-event="fullscreen">
+		          <i class="layui-icon layui-icon-screen-full"></i>
+		        </a>
+		      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+          admin
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">修改密码</a></dd>
+     <!--     <dd><a href="">set 2</a></dd> -->
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="Login.html">退出系统</a></li>
+    </ul>
+  </div>
+
+ <div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
+     <ul class="layui-tab-title site-demo-title">
+       <li class="layui-this">预览</li>
+       <li>查看代码</li>
+       <li>帮助</li>
+     </ul>
+     <div class="layui-body layui-tab-content site-demo site-demo-body">
+       
+       <div class="layui-tab-item layui-show">
+         <div class="layui-main">
+           <div id="LAY_preview">
+
+   </div>
+   </div>
+   </div>
+  </div>
+  </div>
+  <div class="layui-footer footer-demo">
+    <div class="layui-container">
+        <p>© 2021 <a href="/">中广核-多学科智能设计平台</a> </p> 
+      </div>
+  </div>
+</div>
+
+<script src="../src/layui.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+});
+</script>
+</body>
+</html>

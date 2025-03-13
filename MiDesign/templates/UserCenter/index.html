@@ -1,0 +1,850 @@
+{% extends '../basecenter.html' %}
+{% block title %}流程建模{% endblock %}
+
+{% block mainbody %}
+
+    <style>
+        .layui-nav-tree {
+            overflow: hidden;
+        }
+
+      .workBox{
+
+            height: calc(100vh - 215px);
+            position: absolute;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: auto;
+            background: #ccc;
+            padding: 12px;
+        }
+
+      .workContent {
+width:150%;
+          height:150%;
+        }
+#workContent{
+    border:1px inset red;
+}
+
+        .workContentboxinfo {
+            background: url('../static/images/bg.png');
+            position: relative;
+            left: 0px;
+            top: 0px;
+        }
+
+        .scaleinfo {
+            position: absolute;
+            right: 80px;
+            bottom: 150px;
+            font-weight: 600;
+
+        }
+
+        .projectTitle h1 {
+            display: inline-block;
+            margin: 0 0 0 12px;
+            color: #000;
+            font-weight: 600;
+            font-size: 20px;
+            font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+            vertical-align: middle;
+        }
+
+        .softName {
+            position: absolute;
+        }
+
+        .btntools {
+            margin-right: 18px;
+        }
+
+        .btntools .layui-btn {
+
+            margin-bottom: 6px;
+        }
+
+        .layui-footer {
+            border-top: 2px inset #000;
+        }
+
+
+        .device .layui-side {
+            overflow-x: hidden;
+            padding: 10px 0;
+        }
+
+        .device .node {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 10px #aaa;
+            text-align: center;
+            z-index: 33;
+            color: black;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+
+        .device .node:hover {
+            box-shadow: 2px 2px 19px #444;
+            opacity: .9;
+            filter: alpha(opacity=90);
+        }
+
+        .device .node1css {
+            border: lightskyblue 1px solid;
+        }
+
+        .device .node2css {
+            border: orange 1px solid;
+        }
+
+        .device .node3css {
+            border: indianred 1px solid;
+        }
+
+        .device .node4css {
+            border: greenyellow 1px solid;
+        }
+
+        .device .node5css {
+            border: #ccc 1px solid;
+        }
+
+        .device #myDropDown {
+            width: 80px;
+            margin-left: -14px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        /*软件菜单样式调整*/
+        .softroot {
+
+        }
+
+        .softroot .softinfo {
+            display: block;
+            width: 100%;
+            font-size: 14px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            background: #ffffff;
+
+
+        }
+
+        .deviceLeft span, .deviceLeft i {
+            font-weight: bolder;
+        }
+
+        .softroot .softinfo span, .softroot .softinfo i {
+
+            color: #000;
+            font-weight: bolder;
+        }
+
+        .softlist {
+            display: flex;
+            justify-content: start;
+            flex-wrap: wrap;
+            align-items: center;
+            height: 40px;
+            padding: 0 20px;
+            background: #FF5722;
+            margin: 2px 0;
+            font-weight: bolder;
+            color: #FFFFFF;
+        }
+
+        .softlist:hover {
+
+            color: #fddfdf;
+        }
+
+        .node img {
+            z-index: 999;
+        }
+
+        .soft {
+            display: none;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            height: 30px;
+            padding: 0 20px;
+            margin: 2px 0;
+            background: #E9E7E7;
+            font-weight: bolder;
+        }
+
+        .ui-draggable-dragging {
+            background: #FFFFFF;
+            color: #ffffff;
+            width: 100px;
+            height: 30px;
+        }
+
+        /*特效*/
+        .wave {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            background-image: linear-gradient(to top, #1e6ba5 28%, #0d4f77 35%);
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .wave::before,
+        .wave::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            min-width: 400px;
+            min-height: 400px;
+        {#background: #fff;#} animation: roateOne 10s linear infinite;
+        }
+
+        .wave::before {
+            bottom: 20px;
+            opacity: 1;
+            border-radius: 45%;
+        }
+
+        .wave::after {
+            bottom: 30px;
+            border-radius: 47%;
+        }
+
+        @keyframes roateOne {
+            0% {
+                transform: translate(-50%, 0) rotateZ(0deg);
+            }
+            50% {
+                transform: translate(-50%, -2%) rotateZ(180deg);
+            }
+            70% {
+                transform: translate(-50%, -3%) rotateZ(270deg);
+            }
+            100% {
+                transform: translate(-50%, 0%) rotateZ(360deg);
+            }
+        }
+
+        .codetextarea {
+            width: 100%;
+            height: 70vh;
+            font-size: 22px;
+            font-family: '楷体', '微软雅黑';
+        }
+
+        #demo5-wrap mark {
+            padding: 0 4px;
+            margin: 0 -4px;
+            border-radius: 0.5em;
+            background-color: yellow !important;
+        }
+
+        .activeTr {
+            background: #eee;
+            border-right: 3px inset red;
+        }
+
+        #tabcards tr {
+            cursor: pointer;
+        }
+
+        #tabcards tr i {
+            display: none;
+        }
+
+        #tabcards .activeTr i {
+            display: block;
+            margin-top: 11px;
+        }
+
+        .valiableset .layui-table-cell {
+            height: auto;
+        }
+        .softroot .softinfo{
+            background: #2f4056;
+        }
+    .softroot .softinfo span, .softroot .softinfo i {
+            color: #bfbbbb;
+        }
+        
+.layui-side{
+    overflow: hidden;
+}
+    .layui-side  .menu-li>dl{
+      height:30vh;
+      overflow-y: auto;
+    }
+    .listsoft{
+
+        height:52vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    </style>
+    <style type="text/css" id="changestyle">
+
+    </style>
+    <div class="layui-side layui-bg-black layuimini-menu-left deviceLeft ">
+    </div>
+    <div class=" layui-body device">
+        <div class="layui-row" style="padding-top:6px">
+            <div class="pull-left projectTitle">
+                <h1><i class="layui-icon layui-icon-location"></i></h1>
+            </div>
+            <div class="layui-btn-container layui-btn-group pull-right btntools ">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="saveplan">
+                    <i class="fa fa-save"></i> 保存模型
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="copymodel">
+                    <i class="fa fa-copy"></i> 复制模型
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="loadplan">
+                    <i class="fa fa-history"></i> 加载模型
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="resetcanvas">
+                    <i class="fa fa-file-o"></i> 清空画布
+                </button>
+                <button title="重置视图" type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="resetview">
+                    <i class="layui-icon">&#xe9aa;</i> 重置视图
+                </button>
+
+            </div>
+            <div class="layui-btn-container layui-btn-group pull-right btntools ">
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="CreateProject">
+                    <i class="layui-icon">&#xe654;</i>新建项目
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="CreatePlan">
+                    <i class="layui-icon">&#xe654;</i>新建方案
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="UpdatePlan">
+                    <i class="layui-icon">&#xe642;</i>编辑方案
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="DelPlan">
+                    <i class="layui-icon">&#xe640;</i>删除方案
+                </button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="SharePlan">
+                    <i class="layui-icon">&#xe641;</i>分享方案
+                </button>
+
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" filter="test">
+                    <i class="fa fa-dashboard"></i>测试
+                </button>
+            </div>
+        </div>
+
+        <div class="workBox workContentboxinfo layui-row ">
+
+        <div class="workContent layui-row ">
+            <div id="workContent">
+                <div class="nodes">
+                </div>
+            </div>
+
+        </div>
+        </div>
+        <div class="scaleinfo">
+            <span class="layui-badge layui-bg-gray">缩放比例:<span class="datainfo">1</span></span>
+        </div>
+        <div class="layui-footer " id="workConsole" style="min-height:100px;padding:5px; overflow-y:scroll">
+        </div>
+    <div id="tips" style="position: absolute;bottom:2px;left:0px;width:100%;height:20px;z-index:9999999;color:red;text-align:right;display:none"> 保存成功……</div>
+    </div>
+
+    <script type="text/html" id="projecttempl">
+        {% verbatim %}
+        <dd class="menu-dd   "><a class="projectlist" style="" data-color="undefined" href="javascript:;"
+                                  id="id_{{d.id}}"> <i class="fa fa-circle"></i> <span class="layui-left-nav">{{d.title}}</span></a>
+        </dd>
+        {% endverbatim %}
+    </script>
+
+
+    <script type="text/html" id="plantempl">
+        {% verbatim %}
+        <dd class="menu-dd  "><a class="menulist" style="" data-color="undefined" href="javascript:;" id="{{d.id}}"> <i
+                class="fa fa-product-hunt"></i> <span class="layui-left-nav">{{d.title}}</span></a></dd>
+        {% endverbatim %}
+    </script>
+    <script type="text/html" id="plantempl2">
+        <dl class="layui-nav-child">
+            {% verbatim %}
+            <dd class="menu-dd "><a class="menulist" style="" data-color="" href="javascript:;" id="{{d.id}}"> <i
+                    class="fa fa-product-hunt"></i> <span class="layui-left-nav">{{d.title}}</span></a></dd>
+            {% endverbatim %}
+        </dl>
+    </script>
+
+    <script type="text/html" id="edithtml">
+        <div class="layui-tab  layui-tab-brief" lay-filter="tabscards">
+            <ul class="layui-tab-title">
+                <li lay-id='setparams' class="layui-this">输入输出设置</li>
+                <li lay-id='viewparams'>参数设置</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-row">
+                        <div class="layui-col-sm4">
+                            <div class="layui-btn-group pull-right">
+                                <button type="button" class="layui-btn layui-btn-sm" id="test1">
+                                  <i class="layui-icon">&#xe67c;</i>上传输入卡
+                                </button>
+                                <button type="button" id="addInput" class="layui-btn layui-bg-orange layui-btn-sm">
+                                    添加输入卡
+                                </button>
+                                <button type="button" id="addOutput" class="layui-btn layui-bg-red layui-btn-sm">添加输出卡
+                                </button>
+                            </div>
+                            <table class="layui-table " lay-size="sm" lay-skin="line" id="tabcards" title="双击行加载文件">
+                                <thead>
+                                <th width="200px">
+                                    文件名称
+                                </th>
+                                <th width="150px">
+                                    类型
+                                </th>
+                                <th width="250px" align="center" style="text-align: center">
+                                    操作
+                                </th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="layui-col-sm8" style="padding:0 12px;">
+                            <span class="title" style="color: #1E9FFF">文件名</span>
+                            <span class="text" style="color: #1E9FFF" id="cardname">先双击文件</span>
+                            <textarea id="EditInfo" cols="60" rows="5" class="codetextarea"></textarea>
+                            <button type="button" id="dosave" class="layui-btn layui-btn-normal ">保存</button>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-tab-item " id="tablelistparams">
+                    <div class="layui-row" style="padding:2px">
+                        <div class="layui-col-sm6 valiableset">
+                            <div style="width:300px;display: flex;flex-direction: row">
+                                <input type="text" placeholder="变量名称" class="layui-input layui-input-inline "  id="searchvalable" value="" /><button type="button" class="layui-btn layui-btn-primary" id="dosearchvaliable" >查询</button>
+                            </div>
+                            <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter" ></table>
+                        </div>
+                        <div class="layui-col-sm6" style="padding:0 12px;">
+
+                            <textarea id="SetEditInfo" cols="60" rows="5" class="codetextarea"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="currentTableBar">
+        <a class="layui-btn layui-btn-xs layui-btn-primary data-count-edit" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+    </script>
+    <script type="text/html" id="softfilelistthtml">
+        {% verbatim %}
+        {{# layui.each(d, function(index, item){ }}
+        <tr data-id="{{ item.relyonfileid  }}">
+            <td>{{ item.filename }}</td>
+            <td>{{item.filetype==0?"输入卡":"输出卡"}}</td>
+            <td>
+                <button type="button" filter="delSoftfilebtn" data-id="{{ item.relyonfileid }}"
+                        class="layui-btn layui-btn-sm layui-btn-danger">删除
+                </button>
+                <button type="button" filter="editSoftfilebtn" data-id="{{ item.relyonfileid }}"
+                        data-type="{{ item.filetype }}" data-text="{{ item.filename }}"
+                        class="layui-btn  layui-btn-sm layui-btn-info">重命名
+                </button>
+                <i class="fa fa-edit pull-right"></i>
+            </td>
+        </tr>
+        {{#  }); }}
+
+        {% endverbatim %}
+    </script>
+
+    <script type="text/html" id="cardValiableselecthtml">
+        {% verbatim %}
+        <select class="layui-select"  style="width:100%" id="selectValiable">
+            <option value="" selected>--请选择--</option>
+            {{# layui.each(d, function(index, item){ }}
+            <option value='{{ JSON.stringify(item)}}'>{{ item.variablename}}</option>
+            {{#  }); }}
+        </select>
+
+        {% endverbatim %}
+    </script>
+
+    {# 标记列表#}
+    <script type="text/html" id="softMarklistthtml">
+        {% verbatim %}
+        <table class="layui-table" id="marklist">
+            <thead>
+            <th>标记内容</th>
+            <th>标记位置</th>
+            <th>操作</th>
+            </thead>
+            <tbody>
+            {{# layui.each(d, function(index, item){ }}
+            <tr>
+                <td>{{ item.content }}</td>
+                <td>{{item.position.toString() }}</td>
+                <td>
+                    <button type="button" data-index="{{ index }}" class="layui-btn layui-btn-sm layui-btn-danger">删除
+                    </button>
+                </td>
+            </tr>
+            {{# }); }}
+
+            </tbody>
+        </table>
+        {% endverbatim %}
+    </script>
+
+
+    <script type="text/html" id="joblistthtml">
+        {% verbatim %}
+
+        <table  class="layui-table layui-hide lay-size=lg" id="currentTableFilter"  lay-filter="currentTableFilter" title="双击加载项目方案,或右键终止任务" style="width:700px;"></table>
+        {% endverbatim %}
+    </script>
+        <script type="text/html" id="barDemo">
+          <a class="layui-btn layui-btn-xs" lay-event="taskedit">查看</a>
+        </script>
+    <script>
+        var operproject = {};
+        zoomNum = 1;
+        ifDrag = false;
+        disX = 0;
+        disY = 0;
+        mainX = 0;
+        mainY = 0;
+        transformleft = 0;
+        transformtop = 0;
+        oldx = 0;
+        oldy = 0;
+
+        var boxwidth = 0;
+        var boxheight = 0;
+
+        var dot = document.getElementById('workContent');
+
+{#        function mousedown(e) {#}
+{##}
+{#            debugger;#}
+{#            ifDrag = true;#}
+{#            let pos = getPos(e); //获取鼠标坐标#}
+{#            disX = pos.x;#}
+{#            disY = pos.y;#}
+{##}
+{##}
+{#            mainX = dot.offsetLeft;#}
+{#            mainY = dot.offsetTop;#}
+{#            if (oldy > 0)#}
+{#                mainY = oldy#}
+{#            if (oldx > 0)#}
+{#                mainX = oldx#}
+{##}
+{#            if (ifDrag && e.altKey) {#}
+{#                mouseMove(e);#}
+{#            }#}
+{#        }#}
+
+{#        function mouseMove(e) {#}
+{#            document.onmousemove = function (e) {#}
+{#                var evt = window.event || e;#}
+{##}
+{#                transformleft = (evt.clientX - disX) + mainX;#}
+{#                transformtop = (evt.clientY - disY) + mainY;#}
+{##}
+{#                oldx = transformleft;#}
+{#                oldy = transformtop;#}
+{##}
+{#                console.log(transformleft)#}
+{#                document.getElementById("workContent").style.transform = `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`#}
+{#            }#}
+{#            mouseup();#}
+{#        }#}
+
+{#        function mouseup() {#}
+{#            //鼠标抬起#}
+{#            document.onmouseup = function (e) {#}
+{#                var evt = window.event || e;#}
+{#                document.onmousemove = null;#}
+{#                document.onmouseup = null;#}
+{#                ifDrag = false;#}
+{#            };#}
+{#        }#}
+{##}
+{#        // 获取位置#}
+{#        function getPos(ev) {#}
+{#            debugger;#}
+{#            let scrollTop = dot.offsetTop;#}
+{#            let scrollLeft = dot.scrollLeft;#}
+{#            return {x: ev.clientX + scrollLeft, y: ev.clientY + scrollTop};#}
+{#        }#}
+
+       // dot.onmousedown = mousedown;
+        //dot.onmousemove = mouseMove;
+       // dot.onmousemove = mouseup;
+
+        //重新加载
+        function CallEditProject(projectname, id) {
+
+            $ = layui.$;
+            if ($("#id_" + id).length == 0) {
+                var laytpl = layui.laytpl;
+                laytpl($("#projecttempl").html()).render({
+                    id: id,
+                    title: projectname
+                }, function (string) {
+
+                    if ($(".rootproject").siblings().length == 0) {
+                        root = '<dl class="layui-nav-child ">' + string + '</dl>'
+                        $(".rootproject").parent().append(root)
+                    } else
+                        $(".rootproject").siblings().append(string)
+
+                    var softevent = layui.softevent;
+                    softevent.bindLeftMenuEvent();
+                });
+            } else {
+                $("#id_" + id + " span").text(projectname);
+
+                if (operproject && operproject.projectid == id) {
+                    operproject.projectname = projectname;
+                    var icon = '<i class="layui-icon layui-icon-location"></i> ';
+                    if (operproject.planname && operproject.planname.length > 0)
+                        $(".projectTitle h1").html(icon + operproject.projectname + " / " + '<span class="layui-font-green " >' + operproject.planname + '</span>')
+                    else
+                        $(".projectTitle h1").html(icon + operproject.projectname)
+                }
+
+            }
+        }
+
+        function CallEditPlan(planname, projectid, id) {
+
+            $ = layui.$;
+            var idkey = projectid + '_' + id;
+            if ($("#" + idkey).length == 0) {
+                var laytpl = layui.laytpl;
+                var tmpl = "";
+                if ($("#id_" + operproject.projectid).siblings().length == 0) {
+
+                    $("#id_" + operproject.projectid).parents(".menu-dd").removeClass("layui-this");
+                    tmpl = $("#plantempl2").html();
+                } else {
+                    tmpl = $("#plantempl").html();
+
+                }
+                laytpl(tmpl).render({
+                    id: idkey,
+                    title: planname
+                }, function (string) {
+
+                    if ($("#id_" + operproject.projectid).siblings().length == 0) {
+                        $("#id_" + operproject.projectid).parent().append(string)
+
+                    } else {
+                        $("#id_" + operproject.projectid).siblings().append(string)
+
+                    }
+
+                    var softevent = layui.softevent;
+                    softevent.bindLeftMenuEvent();
+
+                });
+
+                $("#" + idkey).click();
+
+            } else {
+                $("#" + idkey + " span").text(planname);
+                var icon = '<i class="layui-icon layui-icon-location"></i> ';
+                operproject.planname = planname;
+                operproject.projectid = projectid;
+                operproject.projectname = $("#id_" + projectid + " span").text();
+                $(".projectTitle h1").html(icon + operproject.projectname + " / " + '<span class="layui-font-green " >' + operproject.planname + '</span>')
+            }
+        }
+
+        layui.use(['dropdown', 'laytpl', 'element', 'layer', 'util', 'code', 'jqueryui', 'softcore', 'softevent', 'miniAdmin'], function () {
+            //定义当前操作的项目
+            var laytpl = layui.laytpl;
+            var element = layui.element
+                , layer = layui.layer,
+                dropdown = layui.dropdown
+                , util = layui.util,
+                softcore = layui.softcore,
+                softevent = layui.softevent,
+                jsPlumb = layui.jsplumb,
+                miniAdmin = layui.miniAdmin,
+                $ = layui.$;
+
+
+
+
+
+            boxwidth = $(".workContent").width()- 5
+            boxheight =($(".workContent").height() - 10)
+            $("#workContent").css({
+                "width": boxwidth + "px",
+                "height": boxheight + "px"
+            })
+
+            jsPlumb.setContainer("workContent")
+            layui.code(); //引用code方法
+
+            if (!operproject.planname) {
+                layer.msg("请打开项目方案进行设计");
+                $("#workConsole").html('<span class="layui-text layui-font-red  layui-show">注意：请先加载项目方案进行设计</span>');
+            }
+
+
+            //layui-nav-item menu-li  layui-nav-itemed projectlist
+            //右键菜单
+
+            //左侧菜单事件
+            element.on("nav(navmenu)", function (data) {
+                var icon = '<i class="layui-icon layui-icon-location"></i> ';
+                var type = data.attr("class");
+                var text = data.text().trim();
+                var id = data.attr("id");
+                if (type == "projectlist") {
+                    if (!(operproject && operproject.projectid == id.replace("id_", ''))) {
+                        operproject = {
+                            projectname: text,
+                            projectid: id.replace("id_", ''),
+                            planid: 0,
+                            planname: "",
+                        }
+                        //显示标题
+                        $(".projectTitle h1").html(icon + operproject.projectname)
+                    }
+
+                } else if (type == "menulist") {
+
+                    var ids = id.split('_');
+                    if (operproject && operproject.planid == ids[1]) {
+                        return;
+                    }
+
+                    var projectname = $("#id_" + ids[0]).text().trim();
+                    operproject = {
+                        projectname: projectname,
+                        projectid: ids[0],
+                        planid: ids[1],
+                        planname: text,
+                    }
+                    $(".projectTitle h1").html(icon + operproject.projectname + " / " + '<span class="layui-font-green " >' + operproject.planname + '</span>')
+
+                    //重置画布，加载方案
+                    softevent.LoadSysProjectPlanJson(ids[0], ids[1])
+
+
+                }
+            });
+
+
+{#            dot.onmousewheel = changeZoom;#}
+
+            function changeZoom(e) {
+
+
+
+                var delta = (e.wheelDelta && (e.wheelDelta > 0 ? 1 : -1)) ||  // chrome & ie &其它
+                    (e.detail && (e.detail > 0 ? -1 : 1));// firefox
+                if (delta > 0) {
+                    // 向上滚
+                    $("#workContent").css({
+                        "-webkit-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                        "-moz-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                        "-ms-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                        "-o-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                        "transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                        "transform-origin": "0% 0%"
+                    })
+                       if (zoomNum >2) {
+                        return;
+                       }
+                    zoomNum += 0.1;
+                } else if (delta < 0) {
+                    // 向下滚
+                    if (zoomNum > 0.6) {
+                        zoomNum -= 0.1;
+
+                        $("#workContent").css({
+                            "-webkit-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                            "-moz-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                            "-ms-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                            "-o-transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                            "transform": `translate(${transformleft}px,${transformtop}px) scale(${zoomNum})`,
+                            "transform-origin": "0% 0%"
+                        })
+                    }
+                }
+
+                //$("#workContent").css({"height":$(".workContent").height()})
+                jsPlumb.setZoom(zoomNum);
+                // jsPlumb.repaintEverything();
+                jsPlumb.repaint()
+                $(".scaleinfo .datainfo").text(zoomNum.toFixed(2))
+
+                e.preventDefault&& e.preventDefault();
+            }
+
+            var mousewheelevt=(/Firefox/i.test(navigator.userAgent))? "DOMMouseScroll" : "mousewheel" //FF doesn't recognize mousewheel as of FF3.x
+                if (dot.attachEvent) //if IE (and Opera depending on user setting)
+                    dot.attachEvent("on"+mousewheelevt,changeZoom)
+                else if (dot.addEventListener) //WC3 browsers
+                    dot.addEventListener(mousewheelevt, changeZoom, false)
+
+            $(window).resize(function () {
+
+
+            })
+
+
+            $("#workContent").resizable({
+                minHeight: 600,
+                minWidth:600,
+                resize: function (event, ui) {
+                    jsPlumb.repaint(ui.helper)
+                    boxwidth = $("#workContent").width();
+                    boxheight = $("#workContent").height();
+                }
+            });
+            //底部输出控制可拖动
+            $(".layui-footer").resizable({
+                handles: 'n',
+                minHeight: 100,
+                maxHeight:600,
+                autoHide: true
+            });
+
+        });
+
+
+    </script>
+
+{% endblock %}
+

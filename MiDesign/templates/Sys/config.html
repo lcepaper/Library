@@ -1,0 +1,96 @@
+<style>
+    .layui-form-label{
+        width:130px
+    }
+</style>
+<div id="Tab{{ suid }}">
+    <form class="layui-form layui-form-pane1" style="padding:12px" method="post" action=""
+          lay-filter="EditForm{{ suid }}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">优化名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="experimentName" lay-verify="required" autocomplete="off"
+                       placeholder="mnist" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">批量运行个数</label>
+            <div class="layui-input-inline">
+                <input type="text" name="trialConcurrency" lay-verify="required" autocomplete="off"
+                       placeholder="1" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">最大运行时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="maxExecDuration" lay-verify="required" autocomplete="off"
+                       placeholder="单位:小时" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">最大优化次数</label>
+            <div class="layui-input-inline">
+                <input type="text" name="maxTrialNum" lay-verify="required" autocomplete="off"
+                       placeholder="10" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">优化方法</label>
+                <select  lay-ignore class="layui-select" style="width:180px" name="builtinTunerName" >
+                    <option value="TPE">TPE</option>
+                    <option value="Random">Random</option>
+                    <option value="Anneal">Anneal</option>
+                    <option value="Evolution">Evolution</option>
+                    <option value="MetisTuner">MetisTuner</option>
+                    <option value="GPTuner">GPTuner</option>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="*">提交</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        {% autoescape off %}
+            var jsonForm={{ form }}
+        {% endautoescape %}
+
+        layui.use(['form', 'layedit', 'laydate'], function () {
+            var $ = layui.jquery;
+            var form = layui.form
+                , layer = layui.layer
+                , miniAdmin = layui.miniAdmin;
+
+            var thisValue = form.val('EditForm{{ suid }}', jsonForm);
+            //监听提交
+            form.on('submit(EditForm{{suid}})', function (data) {
+                var data = form.val('EditForm{{ suid }}');
+                miniAdmin.postAjax({
+                    url: "/config",
+                    data: {
+                        company: JSON.stringify(data)
+                    },
+                    callback: function (data) {
+                        if (data.status == 200)
+                        {
+
+                            layer.alert("提交成功")
+                        }
+
+                    },
+                    loginCallback: function () {
+                    }
+                })
+                return false;
+            });
+
+        });
+    </script>
+</div>
